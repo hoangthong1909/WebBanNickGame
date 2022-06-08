@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "admin")
-public class Admin {
+@Table(name = "user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,10 +27,19 @@ public class Admin {
     @Column(name = "address", length = 100)
     private String address;
 
-    @Column(name = "password", length = 50)
+    @Column(name = "password", length = 100)
     private String password;
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "surplus")
+    private Double surplus;
+
+    @Column(name = "permission")
+    private Integer permission;
+
+    @OneToMany(mappedBy = "userDatHang")
+    private List<Order> orders;
 
 }

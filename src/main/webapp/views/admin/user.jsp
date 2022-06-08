@@ -16,39 +16,50 @@
 </head>
 <body>
 <div class="container ">
-    <c:if test="${admin.id==null}">
-        <c:set var="uri" scope="session" value="/admin/add"></c:set>
+    <c:if test="${user.id==null}">
+        <c:set var="uri" scope="session" value="/admin/user/add"></c:set>
     </c:if>
-    <c:if test="${admin.id!=null}">
-        <c:set var="uri" scope="session" value="/admin/update?id=${pro.id}"></c:set>
+    <c:if test="${user.id!=null}">
+        <c:set var="uri" scope="session" value="/admin/user/update?id=${user.id}"></c:set>
     </c:if>
     <%--@elvariable id="admin" type="lombok"--%>
-    <form:form action="${uri}" method="post" modelAttribute="admin">
+    <form:form action="${uri}" method="post" modelAttribute="user">
         <div class="row">
             <div class="form-group mt-4 col-6">
                 <form:label path="name">Name</form:label>
-                <form:input name="name" path="name" class="form-control" value="${admin.name}"/>
+                <form:input name="name" path="name" class="form-control" value="${user.name}"/>
             </div>
             <div class="form-group mt-4 col-6">
                 <form:label path="email">Email</form:label>
-                <form:input  name="email" path="email" type="email" class="form-control" value="${admin.email}"/>
+                <form:input  name="email" path="email" type="email" class="form-control" value="${user.email}"/>
             </div>
-            <c:if test="${admin.id==null}">
+            <c:if test="${user.id==null}">
                 <div class="form-group mt-4 col-6">
                     <form:label path="password">Password</form:label>
                     <form:input type="password" name="password" path="password" class="form-control"
-                                value="${admin.password}"/>
+                                value="${user.password}"/>
                 </div>
             </c:if>
             <div class="form-group mt-4 col-6">
                 <form:label path="address">Address</form:label>
-                <form:input name="address" path="address" class="form-control" value="${admin.address}"/>
+                <form:input name="address" path="address" class="form-control" value="${user.address}"/>
             </div>
+            <div class="form-group mt-4 col-6">
+                <form:label path="surplus">Surplus</form:label>
+                <form:input type="text" name="surplus" path="surplus" class="form-control" value="${user.surplus}"/>
+            </div>
+            <div class="form-group mt-4 col-6">
+                <label class="form-label  pe-4">Permission</label>
+                <input class="form-check-input" checked type="radio" value="1" ${user.permission == 1 ? "checked" : ""}  name="permission">
+                <label class="form-check-label me-5">Admin</label>
+                <input class="form-check-input" type="radio" value="0" ${user.permission == 0 ? "checked" : ""} name="permission">
+                <label class="form-check-label me-3">User</label>
         </div>
-        <c:if test="${admin.id==null}">
+        </div>
+        <c:if test="${user.id==null}">
             <button class="btn btn-success mt-2">Thêm</button>
         </c:if>
-        <c:if test="${admin.id!=null}">
+        <c:if test="${user.id!=null}">
             <button class="btn btn-success mt-2">Cập Nhật</button>
         </c:if>
         <button type="reset" class="btn btn-primary mt-2">Làm Mới</button>
@@ -72,7 +83,7 @@
             </div>
         </c:if>
     </form:form>
-    <form action="/admin/search" method="get" class="row g-3 mb-3 mt-2">
+    <form action="/admin/user/search" method="get" class="row g-3 mb-3 mt-2">
         <div class="col-11">
             <input type="text" name="search" class="form-control">
         </div>
@@ -87,30 +98,27 @@
             <th scope="col">STT</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Surplus</th>
+            <th scope="col">Permission</th>
             <th scope="col">Address</th>
-<%--            <th>--%>
-<%--                <input type="checkbox" id="selectAll" class="form-check-input">--%>
-<%--            </th>--%>
             <th></th>
             <th></th>
-<%--            <th>--%>
-<%--                <button data-bs-toggle="modal" data-bs-target="#deleteMuch" class="btn btn-danger">Delete Product--%>
-<%--                </button>--%>
-<%--            </th>--%>
         </tr>
         </thead>
         <tbody>
-            <c:forEach items="${list.content}" var="admin" varStatus="status">
+            <c:forEach items="${list.content}" var="u" varStatus="status">
                 <tr>
                     <td>#${status.count}</td>
-                    <td>${admin.name}</td>
-                    <td>${admin.email}</td>
-                    <td>${admin.address}</td>
+                    <td>${u.name}</td>
+                    <td>${u.email}</td>
+                    <td><fmt:formatNumber value="${u.surplus}" pattern="#,###"/> VND</td>
+                    <td>${u.permission ==1 ? "Admin" : "User"}</td>
+                    <td>${u.address}</td>
                     <td>
-                        <a href="/admin/edit?id=${admin.id}" class="btn btn-primary">Cập Nhật</a>
+                        <a href="/admin/user/edit?id=${u.id}" class="btn btn-primary">Cập Nhật</a>
                     </td>
                     <td>
-                        <a data-bs-toggle="modal" data-bs-target="#b${admin.id}" class="btn btn-danger">Xóa</a>
+                        <a data-bs-toggle="modal" data-bs-target="#b${u.id}" class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -143,16 +151,16 @@
                 </c:if>
                 <li class="page-item"><a class="page-link" href="/admin/index${number} ">Previous</a></li>
                 <c:forEach var="i" begin="0" end="${ list.totalPages - 1 }">
-                    <li class="page-item"><a class="page-link" href="/admin/index?page=${ i }">${ i + 1 }</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/user/index?page=${ i }">${ i + 1 }</a></li>
                     </li>
                 </c:forEach>
-                <li class="page-item"><a class="page-link" href="/admin/index${numberup}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/user/index${numberup}">Next</a></li>
             </ul>
         </nav>
     </div>
 </div>
-<c:forEach items="${list.content}" var="admin" varStatus="status">
-    <div id="b${admin.id}" class="modal" tabindex="-1">
+<c:forEach items="${list.content}" var="u" varStatus="status">
+    <div id="b${u.id}" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -161,11 +169,11 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5>Bạn muốn xóa Amdin ${admin.name} ?</h5>
+                    <h5>Bạn muốn xóa user ${u.name} ?</h5>
                 </div>
                 <div class="modal-footer">
-                    <form action="/account/delete" method="post">
-                        <input type="hidden" value="${admin.id}" name="id">
+                    <form action="/admin/user/delete" method="post">
+                        <input type="hidden" value="${u.id}" name="id">
                         <button class="btn btn-danger">Xóa</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"

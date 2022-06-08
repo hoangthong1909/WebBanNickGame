@@ -1,8 +1,8 @@
 package com.example.Assignment_Java5.service.iplm;
 
-import com.example.Assignment_Java5.entitys.Admin;
-import com.example.Assignment_Java5.repository.IAdminRepository;
-import com.example.Assignment_Java5.service.IAdminService;
+import com.example.Assignment_Java5.entitys.User;
+import com.example.Assignment_Java5.repository.IUserRepository;
+import com.example.Assignment_Java5.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,43 +12,43 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class AdminService implements IAdminService {
+public class UserService implements IUserService {
 
     @Autowired
-    private IAdminRepository repository;
+    private IUserRepository repository;
 
     @Override
-    public List<Admin> getAll() {
+    public List<User> getAll() {
         return repository.findAll();
     }
 
     @Override
-    public Page<Admin> findPageAll(Pageable pageable) {
+    public Page<User> findPageAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
     @Override
-    public Admin insert(Admin admin) {
-        admin.setId(null);
-        return repository.save(admin);
+    public User insert(User user) {
+        user.setId(null);
+        return repository.save(user);
     }
 
     @Override
-    public Admin update(Admin admin) {
-        Integer id = admin.getId();
+    public User update(User user) {
+        Integer id = user.getId();
         if (id != null) {
-            Optional<Admin> p = repository.findById(id);
+            Optional<User> p = repository.findById(id);
             if (p.isPresent()) {
-                return repository.save(admin);
+                return repository.save(user);
             }
         }
         return null;
     }
 
     @Override
-    public Admin delete(Integer id) {
+    public User delete(Integer id) {
         if (id != null) {
-            Optional<Admin> p = repository.findById(id);
+            Optional<User> p = repository.findById(id);
             if (p.isPresent()) {
                 repository.deleteById(id);
                 return p.get();
@@ -58,7 +58,12 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public Admin findById(Integer id) {
+    public User findById(Integer id) {
         return repository.findById(id).get();
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 }

@@ -4,11 +4,15 @@ import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsPlanet;
 import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsType;
 import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsVP;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "items")
 public class Items {
@@ -32,7 +36,7 @@ public class Items {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "dateCreate")
+    @Column(name = "datecreate")
     private Date dateCreate;
 
     @ManyToOne
@@ -49,6 +53,7 @@ public class Items {
     @JoinColumn(name = "category_id")
     private Category categoryItem;
 
-
+    @OneToMany(mappedBy = "items")
+    private List<OrderDetail> orderDetailsItems;
 
 }

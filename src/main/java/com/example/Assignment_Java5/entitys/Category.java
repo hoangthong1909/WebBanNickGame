@@ -1,8 +1,6 @@
 package com.example.Assignment_Java5.entitys;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;

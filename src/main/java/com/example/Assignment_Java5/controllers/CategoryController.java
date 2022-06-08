@@ -1,6 +1,6 @@
 package com.example.Assignment_Java5.controllers;
 
-import com.example.Assignment_Java5.entitys.Admin;
+import com.example.Assignment_Java5.entitys.User;
 import com.example.Assignment_Java5.entitys.Category;
 import com.example.Assignment_Java5.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/admin/category")
 public class CategoryController {
     @Autowired
     HttpSession session;
@@ -35,18 +35,17 @@ public class CategoryController {
     @PostMapping("/add")
     public String add(@ModelAttribute("category") Category category) {
         try {
-            category.setStatus(1);
             this.categoryDao.insert(category);
             session.setAttribute("message", "Thêm Mới Thành Công");
         } catch (Exception e) {
             e.printStackTrace();
             session.setAttribute("error", "Thêm Mới Thất Bại");
         }
-        return "redirect:/category/index";
+        return "redirect:/admin/category/index";
     }
 
     @GetMapping("/edit")
-    public String edit(@RequestParam(name = "id") Integer id, Model model, @ModelAttribute("category") Admin admin, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
+    public String edit(@RequestParam(name = "id") Integer id, Model model, @ModelAttribute("category") User admin, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
         model.addAttribute("cate", categoryDao.findById(id));
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         request.setAttribute("list", categoryDao.findPageAll(pageable));
@@ -57,14 +56,13 @@ public class CategoryController {
     public String update(@ModelAttribute("category") Category category, @RequestParam(name = "id") Integer id) {
         try {
             Category cate=this.categoryDao.findById(id);
-            category.setStatus(cate.getStatus());
             this.categoryDao.update(category);
             session.setAttribute("message", "Cập Nhật Thành Công");
         } catch (Exception e) {
             e.printStackTrace();
             session.setAttribute("error", "Cập Nhật Thất Bại");
         }
-        return "redirect:/category/index";
+        return "redirect:/admin/category/index";
     }
 
     @PostMapping("/delete")
@@ -76,6 +74,6 @@ public class CategoryController {
             e.printStackTrace();
             session.setAttribute("error", "Xóa Thất Bại");
         }
-        return "redirect:/category/index";
+        return "redirect:/admin/category/index";
     }
 }

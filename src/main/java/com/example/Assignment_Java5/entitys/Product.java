@@ -1,13 +1,13 @@
 package com.example.Assignment_Java5.entitys;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -39,4 +39,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category idCategory;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderDetail> orderdetailList;
+
 }

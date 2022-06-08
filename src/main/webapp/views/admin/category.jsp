@@ -17,10 +17,10 @@
 <body>
 <div class="container ">
     <c:if test="${cate.id==null}">
-        <c:set var="uri" scope="session" value="/category/add"></c:set>
+        <c:set var="uri" scope="session" value="/admin/category/add"></c:set>
     </c:if>
     <c:if test="${cate.id!=null}">
-        <c:set var="uri" scope="session" value="/category/update?id=${cate.id}"></c:set>
+        <c:set var="uri" scope="session" value="/admin/category/update?id=${cate.id}"></c:set>
     </c:if>
     <%--@elvariable id="admin" type="lombok"--%>
     <form:form action="${uri}" method="post" modelAttribute="category">
@@ -29,6 +29,18 @@
                 <form:label path="name">Category Name</form:label>
                 <form:input name="name" path="name" class="form-control" value="${cate.name}"/>
             </div>
+        </div>
+        <div class="row">
+            <div class="form-group mt-4 col-6">
+                <label class="form-label  pe-4">Classify</label>
+                <input class="form-check-input" checked type="radio" value="1" ${cate.status == 1 ? "checked" : ""}  name="status">
+                <label class="form-check-label me-5">Account</label>
+                <input class="form-check-input" type="radio" value="2" ${cate.status == 2 ? "checked" : ""} name="status">
+                <label class="form-check-label me-3">Items</label>
+<%--            <form:label path="status" class="form-lable">Classify:</form:label>--%>
+<%--            <form:radiobutton path="status" value="1" label="Account" checked="${cate.status == 1 ? 'checked' : ''}"/>--%>
+<%--            <form:radiobutton path="status" value="2" label="Items"  checked="${cate.status == 2 ? 'checked' : ''}"/>--%>
+        </div>
         </div>
         <c:if test="${cate.id==null}">
             <button class="btn btn-success mt-2">Thêm</button>
@@ -57,7 +69,7 @@
             </div>
         </c:if>
     </form:form>
-    <form action="/category/search" method="get" class="row g-3 mb-3 mt-2">
+    <form action="/admin/category/search" method="get" class="row g-3 mb-3 mt-2">
         <div class="col-11">
             <input type="text" name="search" class="form-control">
         </div>
@@ -71,6 +83,7 @@
         <tr>
             <th scope="col">STT</th>
             <th scope="col">Name</th>
+            <th scope="col">Classify</th>
             <th></th>
             <th></th>
         </tr>
@@ -81,7 +94,14 @@
                 <td>#${status.count}</td>
                 <td>${category.name}</td>
                 <td>
-                    <a href="/category/edit?id=${category.id}" class="btn btn-primary">Cập Nhật</a>
+                    <c:choose>
+                        <c:when test="${category.status ==1}">Account</c:when>
+                        <c:when test="${category.status ==2}">Items</c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <a href="/admin/category/edit?id=${category.id}" class="btn btn-primary">Cập Nhật</a>
                 </td>
                 <td>
                     <a data-bs-toggle="modal" data-bs-target="#s${category.id}" class="btn btn-danger">Xóa</a>
@@ -117,10 +137,10 @@
                 </c:if>
                 <li class="page-item"><a class="page-link" href="/category/index${number} ">Previous</a></li>
                 <c:forEach var="i" begin="0" end="${ list.totalPages - 1 }">
-                    <li class="page-item"><a class="page-link" href="/category/index?page=${ i }">${ i + 1 }</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/category/index?page=${ i }">${ i + 1 }</a></li>
                     </li>
                 </c:forEach>
-                <li class="page-item"><a class="page-link" href="/category/index${numberup}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/category/index${numberup}">Next</a></li>
             </ul>
         </nav>
     </div>
@@ -135,10 +155,10 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5>Bạn muốn xóa Amdin ${category.name} ?</h5>
+                    <h5>Bạn muốn xóa category ${category.name} ?</h5>
                 </div>
                 <div class="modal-footer">
-                    <form action="/category/delete" method="post">
+                    <form action="/admin/category/delete" method="post">
                         <input type="hidden" value="${category.id}" name="id">
                         <button class="btn btn-danger">Xóa</button>
                     </form>

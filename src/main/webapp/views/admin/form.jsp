@@ -28,7 +28,8 @@
             <div class="form-group mt-4 col-6">
                 <label class="form-label">Category</label>
                 <form:select class="form-select" path="idCategory">
-                    <form:options itemValue="id" itemLabel="name" items="${listCate}"></form:options>
+                    <form:option value="None">--Select--</form:option>
+                    <form:options  itemValue="id" itemLabel="name" items="${listCate}"></form:options>
                 </form:select>
             </div>
             <div class="form-group mt-4 col-6">

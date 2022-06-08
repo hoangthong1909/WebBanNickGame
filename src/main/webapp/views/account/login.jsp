@@ -7,16 +7,18 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <html>
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="/assets/css/login.css">
 </head>
 <body>
-<h2>Welcome to DRVN</h2>
+<h2>Welcome to Shop Game ThongPR</h2>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
-        <form action="/register" method="post">
+    <%--@elvariable id="register" type=""--%>
+        <form  action="/register" method="post" >
             <h1 style="text-align: center">Create Account</h1>
             <div class="social-container formSinin">
                 <a href="#" class="social"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
@@ -31,25 +33,18 @@
             </div>
             <div></div>
             <span class="formSinin">or use your email for registration</span>
-            <input type="text" placeholder="Name" name="name"/>
+<%--               <form:input type="text" placeholder="UserName" name="name" path="name" />--%>
+            <input type="text" placeholder="UserName" name="name"/>
             <input type="email" placeholder="Email" name="email"/>
             <input type="password" placeholder="Password" name="password"/>
-            <input type="password" placeholder="Confirm Password" name="passwordUser" />
-            <input type="text" placeholder="Phone" name="numberPhone"/>
-            <label>Birthday</label><input name="birthday" type="date"/>
-            <div>
-                <label >Giới tính</label>
-                <input style="width: 10%" type="radio" name="sex" value="1" />
-                <label>Nam</label>
-                <input style="width: 10%" type="radio" name="sex" value="0" />
-                <label>Nữ</label>
-            </div>
-            <input type="text" placeholder="address" name="address" />
+            <input type="password" placeholder="Confirm Password" name="password2" />
+<%--        <form:input type="text" placeholder="Address" name="address" path="address" />--%>
+        <input type="text" placeholder="Address" name="address" />
             <button value="0" name="kt">Sign Up</button>
         </form>
     </div>
     <div class="form-container sign-in-container">
-        <form action="/login" method="post">
+        <form action="/loginAccount" method="post">
             <h1 class="formSinin">Sign in</h1>
             <div class="social-container formSinin">
                 <a href="#" class="social"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
@@ -62,7 +57,18 @@
                     <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
                 </svg></a>
             </div>
-            <span class="formSinin">or use your account</span>
+            <c:if test="${!empty sessionScope.error}">
+                <div class="alert alert-danger">
+                        ${sessionScope.error}
+                </div>
+                <c:remove var="error" scope="session"/>
+            </c:if>
+            <c:if test="${!empty sessionScope.message}">
+                <div class="alert alert-success">
+                        ${sessionScope.message}
+                </div>
+                <c:remove var="error" scope="session"/>
+            </c:if>
             <input type="email" placeholder="Email" name="email" />
             <input type="password" placeholder="Password" name="password"/>
             <div>
@@ -70,12 +76,6 @@
                 <label >Remember me?</label>
             </div>
             <a class="formSinin" href="/forgot">Forgot your password?</a>
-            <c:if test="${!empty sessionScope.error}">
-                <div class="alert alert-danger">
-                        ${sessionScope.error}
-                </div>
-                <c:remove var="error" scope="session"/>
-            </c:if>
             <button>Sign In</button>
         </form>
     </div>

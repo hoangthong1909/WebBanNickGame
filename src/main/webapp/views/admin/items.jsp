@@ -23,37 +23,71 @@
         <c:set var="uri" scope="session" value="/admin/items/update?id=${item.id}"></c:set>
     </c:if>
     <%--    @elvariable id="product" type="lombok"--%>
-    <form:form action="${uri}" method="post" modelAttribute="items">
+    <form:form action="${uri}" method="post" modelAttribute="items" enctype="multipart/form-data">
         <div class="row">
             <div class="form-group mt-4 col-6">
-                <label class="form-label">Category</label>
-                <form:select class="form-select" path="categoryItem">
-                    <form:options itemValue="id" itemLabel="name" items="${listCate}"></form:options>
-                </form:select>
+                <label class="form-label fw-bold">Category</label>
+                <select class="form-select" name="categoryItem">
+                    <c:forEach items="${ listCate }" var="cate">
+                        <option ${item.categoryItem.id==cate.id ? "selected":""}   value="${ cate.id }">
+                                ${ cate.name }
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
             <div class="form-group mt-4 col-6">
-                <form:label path="productName">Items</form:label>
-                <form:input name="productName" path="productName" class="form-control" value="${pro.productName}"/>
+                <label class="form-label fw-bold">Items</label>
+                <select class="form-select" name="item">
+                    <c:forEach items="${ VP }" var="vp">
+                        <option ${item.item==vp.key ? "selected":""} value="${vp.key}">
+                                ${ vp.value }
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
-            <div class="form-group mt-4 col-6">
-                <form:label path="user">UserName</form:label>
-                <form:input name="user" path="user" class="form-control" value="${pro.user}"/>
-            </div>
-            <c:if test="${pro.id==null}">
-                <div class="form-group mt-4 col-6">
-                    <form:label path="password">Password</form:label>
-                    <form:input type="password" name="password" path="password" class="form-control"
-                                value="${pro.password}"/>
-                </div>
-            </c:if>
             <div class="form-group mt-4 col-6">
                 <form:label path="price">Price</form:label>
-                <form:input name="price" path="price" class="form-control" value="${item.price}"/>
+                <form:input path="price" class="form-control" value="${item.price}"/>
             </div>
-            <div class="form-group mt-3 col-6">
-                <form:label path="type">Planet</form:label>
-                <form:select name="type" class="me-1 form-select" path="type"  items="${type}" >
-                </form:select>
+            <div class="form-group mt-4 col-6">
+                <form:label path="quantity">Quantity</form:label>
+                <form:input path="quantity" class="form-control" value="${item.quantity}"/>
+            </div>
+            <div class="form-group mt-4 col-6">
+                <label class="form-label fw-bold">Type</label>
+                <select class="form-select" name="type">
+                    <c:forEach items="${ type }" var="ty">
+                        <option ${item.type==ty.key ? "selected":""} value="${ty.key}">
+                                ${ ty.value }
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-group mt-4 col-6">
+                <label class="form-label fw-bold">Planet</label>
+                <select class="form-select" name="planet">
+                    <c:forEach items="${ planet }" var="planet">
+                        <option ${item.planet==planet.key ? "selected":""} value="${planet.key}">
+                                ${ planet.value }
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-group mt-4 col-6">
+                <form:label path="" class="form-lable">Image</form:label>
+                <input type="file" class="form-control" name="attach">
+<%--                <form:input type="file"  name="attach" path="" class="form-control"/>--%>
+            </div>
+
+            <div class="form-group mt-4 col-6">
+                <label class="form-label fw-bold">Server</label>
+                <select class="form-select" name="server">
+                    <c:forEach items="${ listServer }" var="sv">
+                        <option ${item.server.id==sv.id ? "selected":""}   value="${ sv.id }">
+                                ${ sv.name }
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
         </div>
         <c:if test="${item.id==null}">
@@ -100,6 +134,7 @@
             <th>Image</th>
             <th>Items</th>
             <th>Price</th>
+            <th>Quantity</th>
             <th>Type</th>
             <th>DateCreate</th>
             <th>Planet</th>
@@ -114,9 +149,10 @@
                 <tr>
                     <td>#${status.count}</td>
                     <td>${items.categoryItem.name}</td>
-                    <td></td>
+                    <td><img src="${items.image}" height="50px"></td>
                     <td>${items.item}</td>
                     <td><fmt:formatNumber value="${items.price}" pattern="#,###"/> VND</td>
+                    <td>${items.quantity}</td>
                     <td>${items.type}</td>
                     <td><fmt:formatDate value="${items.dateCreate}" pattern="dd/MM/yyyy"/></td>
                     <td>${items.planet}</td>
