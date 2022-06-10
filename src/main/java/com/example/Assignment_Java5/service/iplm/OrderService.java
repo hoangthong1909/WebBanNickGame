@@ -21,12 +21,12 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<Order> getAll() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
     public Page<Order> findPageAll(Pageable pageable) {
-        return null;
+        return repository.findAll(pageable);
     }
 
     @Override

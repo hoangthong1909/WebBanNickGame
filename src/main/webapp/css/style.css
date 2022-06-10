@@ -2919,14 +2919,14 @@ Version:1.0
 	background: #fff;
 }
 .shopping-cart {
-	background: #f6f6f6;
+	background: #fff;
 	padding: 50px 0;
 }
 .shopping-summery thead .main-hading{
 	padding:0px 50px;
 }
 .shopping-summery thead {
-	background: #F7941D;
+	background: #19b1ff;
 	color: #fff;
 }
 .shopping-summery thead tr th {
@@ -2936,7 +2936,7 @@ Version:1.0
 	text-align: center;
 }
 .shopping-summery tbody tr {
-	border-bottom: 1px solid #F7941D;
+	border-bottom: 1px solid #19b1ff;
 	margin-top: 20px;
 }
 .shopping-summery tbody tr img {
@@ -2958,7 +2958,7 @@ Version:1.0
 	color: #666;
 }
 .shopping-summery tbody .product-name a:hover{
-	color:#F7941D;
+	color:#19b1ff;
 }
 .shopping-summery tbody .product img {
 	max-width: 70px;
@@ -2968,7 +2968,7 @@ Version:1.0
 	padding: 4px;
 }
 .shopping-summery tbody .product:hover img{
-	border-color:#F7941D;
+	border-color:#19b1ff;
 	-webkit-transform:rotate(360deg);
 	-moz-transform:rotate(360deg);
 	transform:rotate(360deg);
@@ -3019,7 +3019,7 @@ Version:1.0
 	font-size: 12px;
 }
 .shopping-cart .qty .button .btn:hover{
-	color:#F7941D;
+	color:#19b1ff;
 }
 .shopping-cart .qty .input-number {
 	border: 1px solid #eceded;
@@ -3038,7 +3038,7 @@ Version:1.0
 	text-align: center;
 }
 .shopping-summery tbody .action a:hover{
-	color:#F7941D;
+	color:#19b1ff;
 }
 .shopping-cart .total-amount{
 	margin-top:50px;
@@ -3067,7 +3067,7 @@ Version:1.0
 }
 .shopping-cart .total-amount .left .coupon form .btn:hover{
 	background:#fff;
-	color:#F7941D;
+	color:#19b1ff;
 }
 .shopping-cart .total-amount .left label{
 	font-size:22px;

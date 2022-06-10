@@ -16,4 +16,5 @@ public Product delete(Integer id);
 public Product findById(Integer id);
 public List<Product> findAllByType(ProductType typeValue);
 public void  deleteMuch(List<Product> list);
+public Integer count(Integer id);
 }

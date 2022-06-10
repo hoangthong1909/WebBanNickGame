@@ -15,4 +15,6 @@ public interface IItemsService {
     public Items update(Items items);
     public Items delete(Integer id);
     public Items findById(Integer id);
+    public  Integer count(Integer id);
+    public  Page<Items> findItemsByCate(Integer id ,Pageable pageable);
 }

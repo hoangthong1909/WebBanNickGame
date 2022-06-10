@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -34,12 +35,15 @@ public class User {
     private Integer status;
 
     @Column(name = "surplus")
-    private Double surplus;
+    private BigDecimal surplus;
 
     @Column(name = "permission")
     private Integer permission;
 
     @OneToMany(mappedBy = "userDatHang")
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "userId")
+    private List<Card> cardList;
 
 }

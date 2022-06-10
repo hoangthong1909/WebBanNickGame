@@ -71,4 +71,9 @@ public class ProductService implements IProductService {
     public void deleteMuch(List<Product> list) {
         repository.deleteAllInBatch(list);
     }
+
+    @Override
+    public Integer count(Integer id) {
+        return repository.countByCategoryProductId(id);
+    }
 }

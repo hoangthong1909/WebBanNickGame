@@ -23,11 +23,15 @@
         <c:set var="uri" scope="session" value="/admin/category/update?id=${cate.id}"></c:set>
     </c:if>
     <%--@elvariable id="admin" type="lombok"--%>
-    <form:form action="${uri}" method="post" modelAttribute="category">
+    <form:form action="${uri}" method="post" modelAttribute="category"  enctype="multipart/form-data">
         <div class="row">
-            <div class="form-group mt-4 col-12">
+            <div class="form-group mt-4 col-6">
                 <form:label path="name">Category Name</form:label>
                 <form:input name="name" path="name" class="form-control" value="${cate.name}"/>
+            </div>
+            <div class="form-group mt-4 col-6">
+                <form:label path="" class="form-lable">Image</form:label>
+                <input type="file" class="form-control" name="attach">
             </div>
         </div>
         <div class="row">
@@ -82,6 +86,7 @@
         <thead>
         <tr>
             <th scope="col">STT</th>
+            <th scope="col">Image</th>
             <th scope="col">Name</th>
             <th scope="col">Classify</th>
             <th></th>
@@ -92,6 +97,7 @@
         <c:forEach items="${list.content}" var="category" varStatus="status">
             <tr>
                 <td>#${status.count}</td>
+                <td><img src="${category.image}" height="50px"></td>
                 <td>${category.name}</td>
                 <td>
                     <c:choose>

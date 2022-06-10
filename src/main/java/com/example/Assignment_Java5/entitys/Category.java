@@ -22,6 +22,9 @@ public class Category {
     @Column(name = "status")
     private Integer status;
 
+    @Column(name = "image")
+    private String image;
+
     @OneToMany(mappedBy = "idCategory")
     private List<Product> listProduct;
 

@@ -63,4 +63,14 @@ public class ItemsService implements IItemsService {
     public Items findById(Integer id) {
         return repository.findById(id).get();
     }
+
+    @Override
+    public Integer count(Integer id) {
+        return repository.countByCategoryItemId(id);
+    }
+
+    @Override
+    public Page<Items> findItemsByCate(Integer id,Pageable pageable) {
+        return repository.findAllByCategoryItem(id,pageable);
+    }
 }

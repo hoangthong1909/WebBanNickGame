@@ -13,4 +13,7 @@ public interface IProductRepository extends JpaRepository<Product,Integer> {
     List<Product> findAllByType(ProductType typeValue);
     @Query("Select obj from Product obj")
     Page<Product> findAllProduct (Pageable pageable);
+//    Integer countByIdCategory(Integer id);
+    @Query("select count(obj.id) from Product obj where obj.idCategory.id = ?1")
+    Integer countByCategoryProductId(Integer id);
 }

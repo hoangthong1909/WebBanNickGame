@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 
 @Controller
 public class RegisterController {
@@ -31,7 +32,7 @@ public class RegisterController {
                 entity.setName(name);
                 entity.setEmail(email);
                 entity.setAddress(address);
-                entity.setSurplus((double) 0);
+                entity.setSurplus(new BigDecimal(0));
                 entity.setPermission(0);
                 this.userDao.insert(entity);
                 session.setAttribute("message", "Đăng Ký Thành Công");

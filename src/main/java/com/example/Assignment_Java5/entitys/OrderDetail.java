@@ -3,12 +3,16 @@ package com.example.Assignment_Java5.entitys;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Component
 @Table(name = "order_details")
 public class OrderDetail {
     @Id
@@ -20,7 +24,7 @@ public class OrderDetail {
     private Integer quantity;
 
     @Column(name = "price")
-    private Double price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

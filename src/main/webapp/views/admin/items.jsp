@@ -76,7 +76,6 @@
             <div class="form-group mt-4 col-6">
                 <form:label path="" class="form-lable">Image</form:label>
                 <input type="file" class="form-control" name="attach">
-<%--                <form:input type="file"  name="attach" path="" class="form-control"/>--%>
             </div>
 
             <div class="form-group mt-4 col-6">
@@ -150,12 +149,12 @@
                     <td>#${status.count}</td>
                     <td>${items.categoryItem.name}</td>
                     <td><img src="${items.image}" height="50px"></td>
-                    <td>${items.item}</td>
+                    <td>${items.item.toString()}</td>
                     <td><fmt:formatNumber value="${items.price}" pattern="#,###"/> VND</td>
                     <td>${items.quantity}</td>
-                    <td>${items.type}</td>
+                    <td>${items.type.toString()}</td>
                     <td><fmt:formatDate value="${items.dateCreate}" pattern="dd/MM/yyyy"/></td>
-                    <td>${items.planet}</td>
+                    <td>${items.planet.toString()}</td>
                     <td>${items.server.name}</td>
                     <td>${items.status ==1 ? "Đang Treo" : "Đã Bán"}</td>
                     <td>

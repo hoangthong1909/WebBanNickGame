@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
 <h2>Welcome to Shop Game ThongPR</h2>
@@ -67,7 +67,7 @@
                 <div class="alert alert-success">
                         ${sessionScope.message}
                 </div>
-                <c:remove var="error" scope="session"/>
+                <c:remove var="message" scope="session"/>
             </c:if>
             <input type="email" placeholder="Email" name="email" />
             <input type="password" placeholder="Password" name="password"/>
@@ -95,6 +95,6 @@
     </div>
 </div>
 
-<script src="../assets/js/login.js"></script>
+<script src="/js/login.js"></script>
 </body>
 </html>

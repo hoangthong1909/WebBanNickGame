@@ -12,11 +12,13 @@ import java.util.List;
 
 public interface ICategoryRepository extends JpaRepository<Category, Integer> {
     @Query("Select obj from Category obj where obj.status > 0")
-    List<Category> getAll ();
+    List<Category> getAll();
 
     @Query("Select obj from Category obj where obj.status = 1")
-    List<Category> findCateProduct ();
+    List<Category> findCateProduct();
 
     @Query("Select obj from Category obj where obj.status = 2")
-    List<Category> findCateItems ();
+    List<Category> findCateItems();
+
+
 }

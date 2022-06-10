@@ -6,14 +6,17 @@ import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsVP;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Setter
 @Getter
 @Entity
+@Component
 @Table(name = "items")
 public class Items {
     @Id
@@ -25,7 +28,7 @@ public class Items {
     private ItemsType type;
 
     @Column(name = "price")
-    private Double price;
+    private BigDecimal price;
 
     @Column(name = "item")
     private ItemsVP item;
