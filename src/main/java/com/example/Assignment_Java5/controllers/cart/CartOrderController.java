@@ -72,7 +72,7 @@ public class CartOrderController {
                         for (OrderDetail item : listOrder) {
                             OrderDetail orderDetail = new OrderDetail();
                             orderDetail.setOrder(order);
-//                    orderDetail.setProduct(item.getProduct());
+                            orderDetail.setNickGame(null);
                             orderDetail.setQuantity(item.getQuantity());
                             orderDetail.setPrice(item.getPrice());
                             orderDetail.setItems(item.getItems());

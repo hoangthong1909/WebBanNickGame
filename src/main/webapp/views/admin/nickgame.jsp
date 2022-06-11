@@ -7,28 +7,27 @@
     <h1 class="h3 mb-0 text-gray-800">Nick Management</h1>
 </div>
     <c:if test="${pro.id==null}">
-        <c:set var="uri" scope="session" value="/account/add"></c:set>
+        <c:set var="uri" scope="session" value="/admin/nickgame/add"></c:set>
     </c:if>
     <c:if test="${pro.id!=null}">
-        <c:set var="uri" scope="session" value="/account/update?id=${pro.id}"></c:set>
+        <c:set var="uri" scope="session" value="/admin/nickgame/update?id=${pro.id}"></c:set>
     </c:if>
-    <%--    @elvariable id="product" type="lombok"--%>
-    <form:form action="${uri}" method="post" modelAttribute="product">
+    <%--@elvariable id="nickgame" type=""--%>
+    <form:form action="${uri}" method="post" modelAttribute="nickgame" enctype="multipart/form-data">
         <div class="row">
             <div class="form-group mt-4 col-6">
                 <label class="form-label">Category</label>
-                <form:select class="form-select" path="idCategory">
-                    <form:option value="None">--Select--</form:option>
-                    <form:options  itemValue="id" itemLabel="name" items="${listCate}"></form:options>
-                </form:select>
+                <select class="form-select" name="idCategory">
+                    <c:forEach items="${ listCate }" var="cate">
+                        <option ${pro.idCategory.id==cate.id ? "selected":""} value="${ cate.id }">
+                                ${ cate.name }
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
             <div class="form-group mt-4 col-6">
-                <form:label path="productName">Name Product</form:label>
-                <form:input name="productName" path="productName" class="form-control" value="${pro.productName}"/>
-            </div>
-            <div class="form-group mt-4 col-6">
-                <form:label path="user">UserName</form:label>
-                <form:input name="user" path="user" class="form-control" value="${pro.user}"/>
+                <form:label path="">UserName</form:label>
+                <form:input  path="user" class="form-control" value="${pro.user}"/>
             </div>
             <c:if test="${pro.id==null}">
                 <div class="form-group mt-4 col-6">
@@ -41,10 +40,33 @@
                 <form:label path="price">Price</form:label>
                 <form:input name="price" path="price" class="form-control" value="${pro.price}"/>
             </div>
-            <div class="form-group mt-3 col-6">
-                <form:label path="type">Planet</form:label>
-                <form:select name="type" class="me-1 form-select" path="type" items="${type}" >
-                </form:select>
+            <div class="form-group mt-4 col-6">
+                <label class="form-label fw-bold">Planet</label>
+                <select class="form-select" name="planet">
+                    <c:forEach items="${ planet }" var="planet">
+                        <option ${pro.planet==planet.key ? "selected":""} value="${planet.key}">
+                                ${ planet.value }
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-group mt-4 col-6">
+                <form:label path="" class="form-lable">Image</form:label>
+                <input type="file" class="form-control" name="attach">
+            </div>
+            <div class="form-group mt-4 col-6">
+                <label class="form-label fw-bold">Server</label>
+                <select class="form-select" name="server">
+                    <c:forEach items="${ listServer }" var="sv">
+                        <option ${pro.server.id==sv.id ? "selected":""} value="${ sv.id }">
+                                ${ sv.name }
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-group mt-4 col-6">
+                <label class="form-label fw-bold">Describe</label>
+                <textarea class="form-control" name="describe" cols="30" rows="10">${pro.describe}</textarea>
             </div>
         </div>
         <c:if test="${pro.id==null}">
@@ -56,7 +78,7 @@
         <button type="reset" class="btn btn-primary mt-2">Làm Mới</button>
         <br>
 
-        <c:if test="${empty list}">
+        <c:if test="${empty list.content}">
             <p class="alert alert-warning">
                 Vui Lòng Thêm Mới Dữ Liệu
             </p>
@@ -74,7 +96,7 @@
             </div>
         </c:if>
     </form:form>
-    <form action="/account/search" method="get" class="row g-3 mb-3 mt-2">
+    <form action="/admin/nickgame/search" method="get" class="row g-3 mb-3 mt-2">
         <div class="col-11">
             <input type="text" name="search" class="form-control">
         </div>
@@ -88,65 +110,36 @@
         <tr>
             <th>STT</th>
             <th>Category</th>
-            <th>NameProduct</th>
+            <th>Image</th>
             <th>UserName</th>
             <th>Price</th>
             <th>CreatedDate</th>
             <th>Planet</th>
-            <th>
-                <input type="checkbox" id="selectAll" class="form-check-input">
-            </th>
+            <th>Server</th>
+            <th>Describe</th>
             <th></th>
-            <th>
-                <button data-bs-toggle="modal" data-bs-target="#deleteMuch" class="btn btn-danger">Delete Product
-                </button>
-            </th>
         </tr>
         </thead>
         <tbody>
-        <form action="/account/deleteMuch" method="post" >
             <c:forEach items="${list.content}" var="product" varStatus="status">
                 <tr>
                     <td>#${status.count}</td>
                     <td>${product.idCategory.name}</td>
-                    <td>${product.productName}</td>
+                    <td><img src="${product.image}" height="50px"></td>
                     <td>${product.user}</td>
                     <td><fmt:formatNumber value="${product.price}" pattern="#,###"/> VND</td>
-                    <td><fmt:formatDate value="${product.createdDate}" pattern="dd/MM/yyyy"/></td>
-                    <td>${product.type}</td>
-                    <td><input class="form-check-input" type="checkbox" name="checkDelete" value="${product.id}"
-                               id="flexCheckDefault">
-                    </td>
+                    <td><fmt:formatDate value="${product.createDate}" pattern="dd/MM/yyyy"/></td>
+                    <td>${product.planet.toString()}</td>
+                    <td>${product.server.name}</td>
+                    <td>${product.describe}</td>
                     <td>
-                        <a href="/account/edit?id=${product.id}" class="btn btn-primary">Cập Nhật</a>
+                        <a href="/admin/nickgame/edit?id=${product.id}" class="btn btn-primary">Cập Nhật</a>
                     </td>
                     <td>
                         <a data-bs-toggle="modal" data-bs-target="#b${product.id}" class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
             </c:forEach>
-            <div id="deleteMuch" class="modal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title">Xác nhận</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h5>Bạn muốn xóa các Product được chọn ?</h5>
-                        </div>
-                        <div class="modal-footer">
-
-                            <button type="submit" class="btn btn-danger">Xóa</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                    aria-label="Close">Hủy
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
         </tbody>
     </table>
     <div class="row">
@@ -174,12 +167,12 @@
                 <c:if test="${list.number+1<list.totalPages}">
                     <c:set var="numberup" scope="session" value="?page=${list.number+1}"></c:set>
                 </c:if>
-                <li class="page-item"><a class="page-link" href="/account/index${number} ">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/nickgame/index${number} ">Previous</a></li>
                 <c:forEach var="i" begin="0" end="${ list.totalPages - 1 }">
-                    <li class="page-item"><a class="page-link" href="/account/index?page=${ i }">${ i + 1 }</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/nickgame/index?page=${ i }">${ i + 1 }</a></li>
                     </li>
                 </c:forEach>
-                <li class="page-item"><a class="page-link" href="/account/index${numberup}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/nickgame/index${numberup}">Next</a></li>
             </ul>
         </nav>
     </div>
@@ -193,10 +186,10 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5>Bạn muốn xóa Product ${product.productName} ?</h5>
+                    <h5>Bạn muốn xóa Nick Game Nay ?</h5>
                 </div>
                 <div class="modal-footer">
-                    <form action="/account/delete" method="post">
+                    <form action="/admin/nickgame/delete" method="post">
                         <input type="hidden" value="${product.id}" name="id">
                         <button class="btn btn-danger">Xóa</button>
                     </form>

@@ -1,43 +1,45 @@
 package com.example.Assignment_Java5.service.iplm;
 
-import com.example.Assignment_Java5.entitys.Product;
-import com.example.Assignment_Java5.entitys.ProductType;
-import com.example.Assignment_Java5.repository.IProductRepository;
-import com.example.Assignment_Java5.service.IProductService;
+import com.example.Assignment_Java5.entitys.Items;
+import com.example.Assignment_Java5.entitys.NickEnum.NickPlanet;
+import com.example.Assignment_Java5.entitys.NickGame;
+import com.example.Assignment_Java5.repository.INickGameRepository;
+import com.example.Assignment_Java5.service.INickGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class ProductService implements IProductService {
+@Service
+public class NickGameService implements INickGameService {
     @Autowired
-    private IProductRepository repository;
+    private INickGameRepository repository;
 
     @Override
-    public List<Product> getAll() {
+    public List<NickGame> getAll() {
         return repository.findAll();
     }
 
     @Override
-    public Page<Product> findPageAll(Pageable pageable) {
+    public Page<NickGame> findPageAll(Pageable pageable) {
         return repository.findAllProduct(pageable);
     }
 
     @Override
-    public Product insert(Product product) {
-        product.setId(null);
-        return repository.save(product);
+    public NickGame insert(NickGame nick) {
+        nick.setId(null);
+        return repository.save(nick);
     }
 
     @Override
-    public Product update(Product product) {
+    public NickGame update(NickGame product) {
         Integer id = product.getId();
         if (id != null) {
-            Optional<Product> p = repository.findById(id);
+            Optional<NickGame> p = repository.findById(id);
             if (p.isPresent()) {
                 return repository.save(product);
             }
@@ -46,9 +48,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product delete(Integer id) {
+    public NickGame delete(Integer id) {
         if (id != null) {
-            Optional<Product> p = repository.findById(id);
+            Optional<NickGame> p = repository.findById(id);
             if (p.isPresent()) {
                 repository.deleteById(id);
                 return p.get();
@@ -58,18 +60,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product findById(Integer id) {
+    public NickGame findById(Integer id) {
         return repository.findById(id).get();
     }
 
     @Override
-    public List<Product> findAllByType(ProductType typeValue) {
-        return repository.findAllByType(typeValue);
-    }
-
-    @Override
-    public void deleteMuch(List<Product> list) {
-        repository.deleteAllInBatch(list);
+    public Page<NickGame> findNickByCate(Integer id, Pageable pageable) {
+        return repository.findAllByCategoryNick(id,pageable);
     }
 
     @Override

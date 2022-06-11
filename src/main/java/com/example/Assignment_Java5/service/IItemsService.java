@@ -1,8 +1,6 @@
 package com.example.Assignment_Java5.service;
 
 import com.example.Assignment_Java5.entitys.Items;
-import com.example.Assignment_Java5.entitys.Product;
-import com.example.Assignment_Java5.entitys.ProductType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

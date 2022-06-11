@@ -2,7 +2,7 @@ package com.example.Assignment_Java5.controllers.home;
 
 import com.example.Assignment_Java5.service.ICategoryService;
 import com.example.Assignment_Java5.service.IItemsService;
-import com.example.Assignment_Java5.service.IProductService;
+import com.example.Assignment_Java5.service.INickGameService;
 import com.example.Assignment_Java5.service.IServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -30,10 +28,8 @@ public class HomeController {
     private IItemsService itemsDao;
 
     @Autowired
-    private IProductService productDao;
+    private INickGameService nickGameDao;
 
-    @Autowired
-    private IServerService serverDao;
 
     @Autowired
     private ICategoryService categoryDao;
@@ -54,22 +50,37 @@ public class HomeController {
     @GetMapping("/nickgame")
     public String nickGame(Model model) {
         model.addAttribute("listCate", categoryDao.getAll());
-        request.setAttribute("view", "/views/home/nickgame.jsp");
+        request.setAttribute("view", "/views/home/allcategory.jsp");
         return "home/layout";
     }
 
-    @GetMapping("/showNro")
-    public String show(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page, @RequestParam(name = "id") Integer id) {
+    @GetMapping("/showVP")
+    public String showVP(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page, @RequestParam(name = "id") Integer id) {
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         model.addAttribute("listItems", itemsDao.findItemsByCate(id, pageable));
-        request.setAttribute("view", "/views/home/items.jsp");
+        request.setAttribute("view", "/views/home/showitems.jsp");
         return "home/layout";
     }
 
-    @GetMapping("/showNro/ItemsDetail")
-    public String detail(Model model, @RequestParam(name = "id") Integer id) {
+    @GetMapping("/showNick")
+    public String showNick(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page, @RequestParam(name = "id") Integer id) {
+        Pageable pageable = PageRequest.of(page.orElse(0), 5);
+        model.addAttribute("listNick", nickGameDao.findNickByCate(id, pageable));
+        request.setAttribute("view", "/views/home/shownick.jsp");
+        return "home/layout";
+    }
+
+    @GetMapping("/showVP/ItemsDetail")
+    public String detailVP(Model model, @RequestParam(name = "id") Integer id) {
         model.addAttribute("detail", itemsDao.findById(id));
-        request.setAttribute("view", "/views/home/details.jsp");
+        request.setAttribute("view", "/views/home/detailsitems.jsp");
+        return "home/layout";
+    }
+    @GetMapping("/showNick/NickDetail")
+    public String detailNick(Model model, @RequestParam(name = "id") Integer id) {
+        model.addAttribute("detailNick",nickGameDao.findById(id));
+        request.setAttribute("active",1);
+        request.setAttribute("view", "/views/home/detailnick.jsp");
         return "home/layout";
     }
 }

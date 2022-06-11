@@ -161,7 +161,7 @@
     <div class="col-sm-6 col-md-3 p-5">
           <div class="classWithPad">
             <div class="image">
-              <a href="../buynickdetail1f0b.html?id=fbb79007-2bf4-4abf-abd0-28a7528b606f">
+              <a href="/home/showVP/ItemsDetail?id=${items.id}">
                 <img src="${items.image}">
                 <span class="ms">Mã số: ${items.id}</span>
               </a>
@@ -202,7 +202,7 @@
                 </div>
                 <div class="col-xs-4 p-5">
                   <div class="view3">
-                    <a href="/home/showNro/ItemsDetail?id=${items.id}">Chi tiết</a>
+                    <a href="/home/showVP/ItemsDetail?id=${items.id}">Chi tiết</a>
                   </div>
                 </div>
               </div>

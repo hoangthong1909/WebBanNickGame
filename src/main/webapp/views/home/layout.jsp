@@ -32,6 +32,7 @@
     <link href="/frontend/assets/frontend/theme/assets/demos/default/css/themes/default.css" rel="stylesheet" id="style_theme" type="text/css" />
     <link href="/frontend/assets/frontend/theme/assets/demos/default/css/custom.css" rel="stylesheet" type="text/css" />
     <script src="/frontend/assets/frontend/theme/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/frontend/assets/frontend/theme/assets/base/js/app.js" type="text/javascript"></script>
     <script src="/frontend/assets/frontend/theme/assets/base/js/components.js" type="text/javascript"></script>
 </head>
 <body class="c-layout-header-fixed c-layout-header-mobile-fixed c-layout-header-topbar c-layout-header-topbar-collapse">

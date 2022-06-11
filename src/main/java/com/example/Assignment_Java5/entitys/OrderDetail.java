@@ -31,8 +31,8 @@ public class OrderDetail {
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Product product;
+    @JoinColumn(name = "nick_id")
+    private NickGame nickGame;
 
     @ManyToOne
     @JoinColumn(name = "items_id")

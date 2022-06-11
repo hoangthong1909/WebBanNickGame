@@ -120,7 +120,12 @@
                                     </div>
                                 </a>
                                 <div class="news_title">
-                                    <a href="/home/showNro?id=${cate.id}" title=""></a>
+                                    <c:if test="${cate.status==1}">
+                                    <a href="/home/showNick?id=${cate.id}" title=""></a>
+                                    </c:if>
+                                    <c:if test="${cate.status==2}">
+                                        <a href="/home/showVP?id=${cate.id}" title=""></a>
+                                    </c:if>
                                 </div>
                                 <div class="news_description">
                                     <p>Số tài khoản:
@@ -134,11 +139,20 @@
                                 <div class="a-more">
                                     <div class="row">
                                         <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
-                                            <a href="/home/showNro?id=${cate.id}" title="">
-                                                <div class="view">
-                                                    XEM THÊM
-                                                </div>
-                                            </a>
+                                            <c:if test="${cate.status==1}">
+                                                <a href="/home/showNick?id=${cate.id}" title="">
+                                                    <div class="view">
+                                                        XEM THÊM
+                                                    </div>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${cate.status==2}">
+                                                <a href="/home/showVP?id=${cate.id}" title="">
+                                                    <div class="view">
+                                                        XEM THÊM
+                                                    </div>
+                                                </a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>

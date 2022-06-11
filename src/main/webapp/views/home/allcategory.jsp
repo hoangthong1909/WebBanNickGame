@@ -5,13 +5,6 @@
   Time: 3:33 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%--
-  Created by IntelliJ IDEA.
-  User: thongpro
-  Date: 6/9/22
-  Time: 5:33 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -48,7 +41,12 @@
                                     </div>
                                 </a>
                                 <div class="news_title">
-                                    <a href="/home/showNro?id=${cate.id}" title=""></a>
+                                    <c:if test="${cate.status==1}">
+                                        <a href="/home/showNick?id=${cate.id}" title=""></a>
+                                    </c:if>
+                                    <c:if test="${cate.status==2}">
+                                        <a href="/home/showVP?id=${cate.id}" title=""></a>
+                                    </c:if>
                                 </div>
                                 <div class="news_description">
                                     <p>Số tài khoản:
@@ -62,11 +60,20 @@
                                 <div class="a-more">
                                     <div class="row">
                                         <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
-                                            <a href="/home/showNro?id=${cate.id}" title="">
-                                                <div class="view">
-                                                    XEM THÊM
-                                                </div>
-                                            </a>
+                                            <c:if test="${cate.status==1}">
+                                                <a href="/home/showNick?id=${cate.id}" title="">
+                                                    <div class="view">
+                                                        XEM THÊM
+                                                    </div>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${cate.status==2}">
+                                                <a href="/home/showVP?id=${cate.id}" title="">
+                                                    <div class="view">
+                                                        XEM THÊM
+                                                    </div>
+                                                </a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
@@ -78,6 +85,7 @@
             <!-- End-->
         </div>
     </div>
+
 </div>
 
 
