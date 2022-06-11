@@ -29,7 +29,8 @@ public class UserController {
     public String index(@ModelAttribute("user") User user, Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         model.addAttribute("list", userDao.findPageAll(pageable));
-        return "admin/user";
+        request.setAttribute("view","/views/admin/user.jsp");
+        return "admin/admin";
     }
 
 
@@ -53,7 +54,8 @@ public class UserController {
         model.addAttribute("user", userDao.findById(id));
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         request.setAttribute("list", userDao.findPageAll(pageable));
-        return "admin/user";
+        request.setAttribute("view","/views/admin/user.jsp");
+        return "admin/admin";
     }
 
     @PostMapping("/update")

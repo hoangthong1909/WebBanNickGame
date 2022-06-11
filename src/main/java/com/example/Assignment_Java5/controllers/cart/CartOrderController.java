@@ -53,9 +53,14 @@ public class CartOrderController {
                 order.setDatecreate(new Date());
                 order.setStatus(1);
                 BigDecimal total = BigDecimal.valueOf(0);
-                for (OrderDetail item : listOrder) {
-                    BigDecimal q = BigDecimal.valueOf(item.getQuantity());
-                    total = total.add(q.multiply(item.getPrice(), MathContext.DECIMAL32));
+                for (Items i: itemsList) {
+                    for (OrderDetail item : listOrder) {
+                        if (i.getId()==item.getItems().getId()){
+                            item.setItems(i);
+                            BigDecimal q = BigDecimal.valueOf(item.getQuantity());
+                            total = total.add(i.getPrice(),MathContext.DECIMAL32).multiply(q);
+                        }
+                    }
                 }
                 order.setTotal(total);
                 if (total.compareTo(user.getSurplus()) > 0) {

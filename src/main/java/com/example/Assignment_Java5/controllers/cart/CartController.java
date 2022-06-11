@@ -1,7 +1,9 @@
 package com.example.Assignment_Java5.controllers.cart;
 
+import com.example.Assignment_Java5.entitys.Items;
 import com.example.Assignment_Java5.entitys.Order;
 import com.example.Assignment_Java5.entitys.OrderDetail;
+import com.example.Assignment_Java5.service.IItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,9 @@ public class CartController {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private IItemsService iItemsDao;
+
     @GetMapping("/cart")
     public String getCart(Model model){
         BigDecimal total = new BigDecimal(0);
@@ -35,10 +40,16 @@ public class CartController {
             quantity = 0;
         } else {
             List<OrderDetail> listOrder = order.getOrderdetails();
-            for (OrderDetail item : listOrder) {
-                BigDecimal q = BigDecimal.valueOf(item.getQuantity());
-                total = total.add(item.getPrice().multiply(q));
-                quantity += item.getQuantity();
+            List<Items> itemsList =iItemsDao.getAll();
+            for (Items i: itemsList) {
+                for (OrderDetail item : listOrder) {
+                    if (i.getId()==item.getItems().getId()){
+                        item.setItems(i);
+                        BigDecimal q = BigDecimal.valueOf(item.getQuantity());
+                        total = total.add(i.getPrice().multiply(q));
+                        quantity += item.getQuantity();
+                    }
+                }
             }
             quantityCart+= listOrder.size();
         }

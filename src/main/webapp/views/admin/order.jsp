@@ -10,19 +10,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Card Form</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-</head>
-<body>
-<div class="container ">
+<div class="d-sm-flex align-items-center justify-content-between mb-4 offset-5">
+    <h1 class="h3 mb-0 text-gray-800">Order Management</h1>
+</div>
     <c:if test="${empty list.content}">
         <p class="alert alert-warning">
             Vui Lòng Thêm Mới Dữ Liệu
@@ -118,20 +108,15 @@
                 <c:if test="${list.number+1<list.totalPages}">
                     <c:set var="numberup" scope="session" value="?page=${list.number+1}"></c:set>
                 </c:if>
-                <li class="page-item"><a class="page-link" href="/admin/card/index${number} ">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/order/index${number} ">Previous</a></li>
                 <c:forEach var="i" begin="0" end="${ list.totalPages - 1 }">
-                    <li class="page-item"><a class="page-link" href="/admin/card/index?page=${ i }">${ i + 1 }</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/order/index?page=${ i }">${ i + 1 }</a></li>
                     </li>
                 </c:forEach>
-                <li class="page-item"><a class="page-link" href="/admin/card/index${numberup}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/order/index${numberup}">Next</a></li>
             </ul>
         </nav>
     </div>
-</div>
 
-<!-- JavaScript Bundle with Popper -->
-<script src="/js/bootstrap.min.js"></script>
-</body>
-</html>
 
 

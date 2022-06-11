@@ -10,46 +10,41 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Card Form</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-</head>
-<body>
-<div class="container ">
+<div class="d-sm-flex align-items-center justify-content-between mb-4 offset-5">
+    <h1 class="h3 mb-0 text-gray-800">OrderDetail Management</h1>
+</div>
     <table class="table table-success table-striped" >
         <thead>
         <tr>
             <th scope="col">STT</th>
-            <th scope="col">UserName</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Price</th>
+            <th>Image</th>
+            <th>Items</th>
+            <th>Type</th>
+            <th>Planet</th>
+            <th>Server</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-            <c:forEach items="${orderDetail}" var="detail" varStatus="status">
+            <c:forEach items="${orderDetail}" var="orderdetail" varStatus="status">
             <tr>
             <td>#${status.count}</td>
-<%--                <td>${orderDetail.userId.name}</td>--%>
-                <td>${detail.quantity}</td>
-                <td><fmt:formatNumber value="${detail.price}" pattern="#,###"/>VND</td>
-<%--                <td><fmt:formatNumber value="${orderDetail.price}" pattern="#,###"/>VND</td>--%>
+                <td><img height="50px" src="${orderdetail.items.image}" alt=""></td>
+                <td>${orderdetail.items.item.toString()}</td>
+                <td>${orderdetail.items.type.toString()}</td>
+                <td>${orderdetail.items.planet.toString()}</td>
+                <td>${orderdetail.items.server.name}</td>
+                <td><fmt:formatNumber value="${orderdetail.price}" pattern="#,###"/>VND</td>
+                <td>${orderdetail.quantity}</td>
+                <td><span style="color: red"><fmt:formatNumber value="${orderdetail.price*orderdetail.quantity}" pattern="#,###"/> VND</span></td>
                 </tr>
+
             </c:forEach>
         </tbody>
     </table>
-</div>
 
-<!-- JavaScript Bundle with Popper -->
-<script src="/js/bootstrap.min.js"></script>
-</body>
-</html>
 
 

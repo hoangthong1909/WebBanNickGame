@@ -38,7 +38,8 @@ public class CategoryController {
     public String index(@ModelAttribute("category") Category category, Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         model.addAttribute("list", categoryDao.findPageAll(pageable));
-        return "admin/category";
+        request.setAttribute("view","/views/admin/category.jsp");
+        return "admin/admin";
     }
 
 
@@ -69,7 +70,8 @@ public class CategoryController {
         model.addAttribute("cate", categoryDao.findById(id));
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         request.setAttribute("list", categoryDao.findPageAll(pageable));
-        return "admin/category";
+        request.setAttribute("view","/views/admin/category.jsp");
+        return "admin/admin";
     }
 
     @PostMapping("/update")

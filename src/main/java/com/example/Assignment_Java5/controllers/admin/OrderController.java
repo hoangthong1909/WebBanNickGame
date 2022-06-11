@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,14 +49,16 @@ public class OrderController {
     public String index(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         model.addAttribute("list", orderDao.findPageAll(pageable));
-        return "admin/order";
+        request.setAttribute("view","/views/admin/order.jsp");
+        return "admin/admin";
     }
 
     @GetMapping("/showdetail")
     public String showDetail(Model model,@RequestParam(name = "id") Integer id) {
         Order order = orderDao.findById(id);
         model.addAttribute("orderDetail", order.getOrderdetails());
-        return "admin/orderdetail";
+        request.setAttribute("view","/views/admin/orderdetail.jsp");
+        return "admin/admin";
     }
 
     @PostMapping("/delete")
@@ -69,7 +72,7 @@ public class OrderController {
             e.printStackTrace();
             session.setAttribute("error", "Xóa Thất Bại");
         }
-        return "redirect:/admin/card/index";
+        return "redirect:/admin/order/index";
     }
 
 }

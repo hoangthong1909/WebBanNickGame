@@ -46,7 +46,8 @@ public class CardController {
     public String index(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         model.addAttribute("list", cardDao.findPageAll(pageable));
-        return "admin/card";
+        request.setAttribute("view","/views/admin/card.jsp");
+        return "admin/admin";
     }
 
     @PostMapping("/confirm")

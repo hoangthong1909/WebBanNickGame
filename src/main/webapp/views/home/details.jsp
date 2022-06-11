@@ -32,7 +32,12 @@
                     <div class="col-md-3">
                         <div class="form-group row">
                             <div class="col-xs-7 ar">
-                                <a href="/home/addtocart?id=${detail.id}" class="btn btn-info  btn2">Thêm vào giỏ hàng</a>
+                                <c:if test="${detail.quantity==0}">
+                                    <h2 >Đã bán hết</h2>
+                                </c:if>
+                                <c:if test="${detail.quantity>0}">
+                                        <a href="/home/addtocart?id=${detail.id}" class="btn btn-info  btn2">Thêm vào giỏ hàng</a>
+                                </c:if>
                             </div>
                             <div class="col-xs-5">
                                 <a href="/home/card" class="btn btn-success btn-block btn2">Nạp Thẻ</a>

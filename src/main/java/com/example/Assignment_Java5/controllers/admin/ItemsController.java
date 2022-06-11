@@ -49,7 +49,8 @@ public class ItemsController {
         model.addAttribute("list", itemsDao.findPageAll(pageable));
         model.addAttribute("listServer",serverDao.getAll());
         model.addAttribute("listCate",categoryDao.findCateItems());
-        return "admin/items";
+        request.setAttribute("view","/views/admin/items.jsp");
+        return "admin/admin";
     }
 
 
@@ -84,7 +85,8 @@ public class ItemsController {
         model.addAttribute("listCate",categoryDao.findCateItems());
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         request.setAttribute("list", itemsDao.findPageAll(pageable));
-        return "admin/items";
+        request.setAttribute("view","/views/admin/items.jsp");
+        return "admin/admin";
     }
 
     @PostMapping("/update")

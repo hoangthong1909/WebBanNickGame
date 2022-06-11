@@ -40,7 +40,8 @@ public class ProductController {
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         model.addAttribute("list", dao.findPageAll(pageable));
         model.addAttribute("listCate",categoryDao.getAll());
-        return "admin/form";
+        request.setAttribute("view","/views/admin/form.jsp");
+        return "admin/admin";
     }
 
 
@@ -63,7 +64,8 @@ public class ProductController {
         model.addAttribute("listCate",categoryDao.getAll());
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         request.setAttribute("list", dao.findPageAll(pageable));
-        return "admin/form";
+        request.setAttribute("view","/views/admin/form.jsp");
+        return "admin/admin";
     }
 
     @PostMapping("/update")

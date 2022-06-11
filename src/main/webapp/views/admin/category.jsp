@@ -3,26 +3,16 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Form</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-</head>
-<body>
-<div class="container ">
-    <c:if test="${cate.id==null}">
+<div class="d-sm-flex align-items-center justify-content-between mb-4 offset-5">
+    <h1 class="h3 mb-0 text-gray-800">Catagory Management</h1>
+</div>
+<c:if test="${cate.id==null}">
         <c:set var="uri" scope="session" value="/admin/category/add"></c:set>
     </c:if>
     <c:if test="${cate.id!=null}">
         <c:set var="uri" scope="session" value="/admin/category/update?id=${cate.id}"></c:set>
     </c:if>
-    <%--@elvariable id="admin" type="lombok"--%>
+    <%--@elvariable id="category" type="lombok"--%>
     <form:form action="${uri}" method="post" modelAttribute="category"  enctype="multipart/form-data">
         <div class="row">
             <div class="form-group mt-4 col-6">
@@ -150,7 +140,6 @@
             </ul>
         </nav>
     </div>
-</div>
 <c:forEach items="${list.content}" var="category" varStatus="status">
     <div id="s${category.id}" class="modal" tabindex="-1">
         <div class="modal-dialog">
@@ -176,10 +165,3 @@
         </div>
     </div>
 </c:forEach>
-
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-        crossorigin="anonymous"></script>
-</body>
-</html>

@@ -70,7 +70,7 @@
               <td class="qty" ><!-- Input Order -->
                 <div class="input-group">
                   <div class="button minus">
-                    <a href="/home/cart/minus?id=${cart.items.id}" class="btn btn-primary "  >
+                    <a href="/home/cart/minus?id=${cart.items.id}" class="btn btn-primary ">
                       <i class="ti-minus"></i>
                     </a>
                   </div>

@@ -189,9 +189,16 @@
             <div class="a-more">
               <div class="row">
                 <div class="col-xs-8 p-5">
-                  <div class="price_item">
-                    <a href="/home/addtocart?id=${items.id}">Thêm vào giỏ hàng</a>
-                  </div>
+                  <c:if test="${items.quantity==0}">
+                    <div class="price_item">
+                      <span>Đã bán hết</span>
+                    </div>
+                  </c:if>
+                  <c:if test="${items.quantity>0}">
+                    <div class="price_item">
+                      <a href="/home/addtocart?id=${items.id}">Thêm vào giỏ hàng</a>
+                    </div>
+                  </c:if>
                 </div>
                 <div class="col-xs-4 p-5">
                   <div class="view3">
