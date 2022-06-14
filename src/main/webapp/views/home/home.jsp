@@ -43,7 +43,7 @@
                             </div>
                         </div>
                     </div>
-                    <c:if test="${!empty sessionScope.user}">
+<%--                    <c:if test="${!empty sessionScope.user}">--%>
                     <div class="col-sm-3 col-xs-6 p-5">
                         <div class="classWithPad1" style="border: 0px solid #cccccc;">
                             <a href="/home/info" title="">
@@ -56,21 +56,21 @@
                             </div>
                         </div>
                     </div>
-                    </c:if>
-                <c:if test="${empty sessionScope.user}">
-                    <div class="col-sm-3 col-xs-6 p-5">
-                        <div class="classWithPad1" style="border: 0px solid #cccccc;">
-                            <a href="/login" title="">
-                                <div class="news_image">
-                                    <img src="/images/category/TaiKhoan.png">
-                                </div>
-                            </a>
-                            <div class="news_title">
-                                <a href="/login" title="">TÀI KHOẢN</a>
-                            </div>
-                        </div>
-                    </div>
-                </c:if>
+<%--                    </c:if>--%>
+<%--                <c:if test="${empty sessionScope.user}">--%>
+<%--                    <div class="col-sm-3 col-xs-6 p-5">--%>
+<%--                        <div class="classWithPad1" style="border: 0px solid #cccccc;">--%>
+<%--                            <a href="/login" title="">--%>
+<%--                                <div class="news_image">--%>
+<%--                                    <img src="/images/category/TaiKhoan.png">--%>
+<%--                                </div>--%>
+<%--                            </a>--%>
+<%--                            <div class="news_title">--%>
+<%--                                <a href="/login" title="">TÀI KHOẢN</a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
                     <div class="col-sm-3 col-xs-6 p-5">
                         <div class="classWithPad1" style="border: 0px solid #cccccc;">
                             <a href="/home/index" title="">

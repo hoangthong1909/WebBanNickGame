@@ -55,17 +55,10 @@ public class TopUpCardController {
                 e.printStackTrace();
                 session.setAttribute("error", "Error");
             }
-        return "redirect:/home/card/history";
+        return "redirect:/home/history/transaction";
         }else {
             return "redirect:/login";
         }
-    }
-
-    @GetMapping("/history")
-    public String cardHistory(Model model) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("history",user.getCardList());
-        return "/home/cardhistory";
     }
 
     @ModelAttribute("type")

@@ -14,4 +14,5 @@ public interface ICardService {
     public Card update(Card card);
     public Card delete(Integer id);
     public Card findById(Integer id);
+    public Page<Card> findAllByUser(Integer id, Pageable pageable);
 }

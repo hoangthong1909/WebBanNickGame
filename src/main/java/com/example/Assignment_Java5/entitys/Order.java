@@ -1,8 +1,6 @@
 package com.example.Assignment_Java5.entitys;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -11,7 +9,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,6 +30,12 @@ public class Order {
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "idgame")
+    private String idGame;
+
+    @Column(name = "location")
+    private String location;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

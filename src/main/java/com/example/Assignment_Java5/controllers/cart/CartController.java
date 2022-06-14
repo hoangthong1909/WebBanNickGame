@@ -32,13 +32,16 @@ public class CartController {
     @GetMapping("/cart")
     public String getCart(Model model){
         BigDecimal total = new BigDecimal(0);
+        Boolean check=false;
         int quantity = 0;
         int quantityCart=0;
         Order order = (Order) session.getAttribute("order");
         if (order == null) {
             total = new BigDecimal(0);
             quantity = 0;
+            check=false;
         } else {
+            check=true;
             List<OrderDetail> listOrder = order.getOrderdetails();
             List<Items> itemsList =iItemsDao.getAll();
             for (Items i: itemsList) {
@@ -53,8 +56,9 @@ public class CartController {
             }
             quantityCart+= listOrder.size();
         }
-        model.addAttribute("total",total);
+        session.setAttribute("total",total);
         model.addAttribute("quantityVP",quantity);
+        model.addAttribute("check",check);
         model.addAttribute("quantityCart",quantityCart);
         request.setAttribute("view","/views/cart/cart.jsp");
         return "home/layout";

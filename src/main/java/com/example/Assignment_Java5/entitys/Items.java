@@ -3,12 +3,14 @@ package com.example.Assignment_Java5.entitys;
 import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsPlanet;
 import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsType;
 import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsVP;
+import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;

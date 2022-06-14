@@ -118,6 +118,7 @@
             <th>Server</th>
             <th>Describe</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

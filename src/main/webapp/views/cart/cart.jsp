@@ -115,11 +115,26 @@
                   <li>Tổng vật phẩm<span style="color: red">${quantityCart}</span></li>
                   <li>Tổng số lượng <span style="color: red">${quantityVP}</span></li>
                   <li>Phí giao dịch<span>Miễn phí</span></li>
-                  <li class="last">Tổng tiền<span style="color: red;font-size: 20px"><fmt:formatNumber value="${total}" pattern="#,###"/> VND</span></li>
+                  <li class="last">Tổng tiền<span style="color: red;font-size: 20px"><fmt:formatNumber value="${sessionScope.total}" pattern="#,###"/> VND</span></li>
                 </ul>
                 <div class="button5">
-                  <a href="/home/addtoorder" class="btn">Confirm</a>
-                  <a href="/home/index" class="btn">Tiếp tục mua hàng</a>
+            <c:if test="${!empty sessionScope.user}">
+                  <c:if test="${check==true}">
+                    <button  data-toggle="modal" data-target="#Modal_Items" class="btn btn-info btn-block btn2">Check Out</button>
+                  </c:if>
+                  <c:if test="${check ==false}">
+                    <a href="/home/cart" class="btn">Check Out</a>
+                  </c:if>
+            </c:if>
+                  <c:if test="${empty sessionScope.user}">
+                    <a href="/login" class="btn">Check Out</a>
+                  </c:if>
+                  <c:if test="${empty sessionScope.idCu}">
+                    <a href="/home/nickgame" class="btn">Tiếp tục mua hàng</a>
+                  </c:if>
+                  <c:if test="${!empty sessionScope.idCu}">
+                    <a href="/home/showVP?id=${idCu}" class="btn">Tiếp tục mua hàng</a>
+                  </c:if>
                 </div>
               </div>
             </div>
@@ -132,4 +147,41 @@
 </div>
 </div>
 </div>
+</div>
+<div id="Modal_Items" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <form action="/home/addtoorder" method="get">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" style="color:#19b1ff;">&times;</button>
+        <h4 class="modal-title" style="color:#19b1ff;">Xác nhận mua vật phẩm</h4>
+      </div>
+      <div class="modal-body">
+        <a href="/home/card"><h4 class="text-center" style="color:#ff1919;font-weight:bold;"> NẠP TIỀN TỪ ATM - VÍ TẠI ĐÂY</h4></a>
+        <br>
+        <div class="form-group">
+        <label class="form-label fw-bold">ID Game</label>
+        <input type="text" placeholder="Nhập ID game" name="idGame" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label fw-bold">Địa điểm giao dịch</label>
+          <input type="text" placeholder="Nhập địa điểm giao dịch" name="location" class="form-control">
+        </div>
+        <div class="form-group">
+        <label class="form-label fw-bold">Tổng vật phẩm: <span style="color: red">${quantityCart}</span></label>
+        </div>
+        <div class="form-group">
+        <label class="form-label fw-bold">Tổng số lượng : <span style="color: red">${quantityVP}</span></label>
+        </div>
+        <div class="form-group">
+        <label class="form-label fw-bold">Tổng tiền : <span style="color: red;font-size: 20px"><fmt:formatNumber value="${sessionScope.total}" pattern="#,###"/> VND</span></label>
+      </div>
+      </div>
+      <div class="modal-footer">
+          <button  class="btn btn-success mini">THANH TOÁN</button>
+        <button type="button" class="btn btn-warning mini" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+    </form>
+  </div>
 </div>

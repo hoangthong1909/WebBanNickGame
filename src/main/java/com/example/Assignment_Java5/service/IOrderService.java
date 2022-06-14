@@ -14,4 +14,8 @@ public interface IOrderService {
     public Order update(Order order);
     public Order delete(Integer id);
     public Order findById(Integer id);
+    Page<Order> findAllOrderNickByUser(Integer id,Pageable pageable);
+    Page<Order> findAllOrderItemsByUser(Integer id,Pageable pageable);
+    Page<Order> findAllOrderItems(Pageable pageable);
+    Page<Order> findAllOrderNick(Pageable pageable);
 }

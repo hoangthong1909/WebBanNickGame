@@ -34,8 +34,11 @@
         <thead>
         <tr>
             <th scope="col">STT</th>
-            <th scope="col">UserName</th>
             <th scope="col">DateCreate</th>
+            <th scope="col">UserName</th>
+            <th scope="col">IDGame</th>
+            <th scope="col">Location</th>
+            <th scope="col">Item Number</th>
             <th scope="col">Total</th>
             <th scope="col">Status</th>
             <th></th>
@@ -46,12 +49,23 @@
         <c:forEach items="${list.content}" var="order" varStatus="status">
             <tr>
                 <td>#${status.count}</td>
+                <td><fmt:formatDate value="${order.datecreate}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                 <td>${order.userDatHang.name}</td>
-                <td><fmt:formatDate value="${order.datecreate}" pattern="dd/MM/yyyy"/></td>
+                <td>${order.idGame}</td>
+                <td>${order.location}</td>
+                <td>${order.orderdetails.size()}</td>
                 <td><fmt:formatNumber value="${order.total}" pattern="#,###"/>VND</td>
-                <td>${order.status==1?"Success" : ""}</td>
+                <td> <c:choose>
+                    <c:when test="${order.status ==0}">
+                        <button data-toggle="modal" data-target="#zz${order.id}" class="btn btn-success">Confirm</button>
+                        <button data-toggle="modal" data-target="#xx${order.id}" class="btn btn-danger">Cancel</button>
+                    </c:when>
+                    <c:when test="${order.status ==1}"><span style="color: green">Confirmed</span></c:when>
+                    <c:when test="${order.status ==2}"><span style="color: red">Cancelled</span></c:when>
+                    <c:otherwise>-</c:otherwise>
+                </c:choose></td>
                 <td>
-                    <a href="/admin/order/showdetail?id=${order.id}" class="btn btn-warning">View</a>
+                    <a href="/admin/order/showdetailItems?id=${order.id}" class="btn btn-warning">View</a>
                 </td>
                 <td>
                     <button data-toggle="modal" data-target="#kak${order.id}" class="btn btn-danger">Delete</button>
@@ -71,6 +85,53 @@
                                 <form action="/admin/order/delete" method="post">
                                     <input type="hidden" value="${order.id}" name="id">
                                     <button class="btn btn-danger">Xóa</button>
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        aria-label="Close">Hủy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="xx${order.id}" class="modal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Xác nhận</h3>
+                                <button type="button" class="btn-close" data-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5> Xác Nhận Hủy hóa đơn của khách${order.userDatHang.name} ?</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="/admin/order/cancel" method="post">
+                                    <input type="hidden" value="${order.id}" name="id">
+                                    <button class="btn btn-success">Xác Nhận</button>
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        aria-label="Close">Hủy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <%--            Modal confirm--%>
+                <div id="zz${order.id}" class="modal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Xác nhận</h3>
+                                <button type="button" class="btn-close" data-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Xác Nhận đã Giao dịch thành công hóa đơn của khách ${order.userDatHang.name} ?</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="/admin/order/confirm" method="post">
+                                    <input type="hidden" value="${order.id}" name="id">
+                                    <button class="btn btn-success">Xác Nhận</button>
                                 </form>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                         aria-label="Close">Hủy
@@ -108,12 +169,12 @@
                 <c:if test="${list.number+1<list.totalPages}">
                     <c:set var="numberup" scope="session" value="?page=${list.number+1}"></c:set>
                 </c:if>
-                <li class="page-item"><a class="page-link" href="/admin/order/index${number} ">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/order/items${number} ">Previous</a></li>
                 <c:forEach var="i" begin="0" end="${ list.totalPages - 1 }">
-                    <li class="page-item"><a class="page-link" href="/admin/order/index?page=${ i }">${ i + 1 }</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/order/items?page=${ i }">${ i + 1 }</a></li>
                     </li>
                 </c:forEach>
-                <li class="page-item"><a class="page-link" href="/admin/order/index${numberup}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/order/items${numberup}">Next</a></li>
             </ul>
         </nav>
     </div>

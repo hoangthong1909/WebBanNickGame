@@ -30,6 +30,7 @@ public class AddToCartController {
     @GetMapping("/addtocart")
     public String addToCart(@RequestParam(name = "id") Integer id, @RequestParam(name = "quantity", required = false, defaultValue = "1") Integer quantity) {
         Items items = this.itemsDao.findById(id);
+        session.setAttribute("idCu",items.getCategoryItem().getId());
         if (session.getAttribute("order") == null) {
             Order order = new Order();
             OrderDetail orderdetail = new OrderDetail();

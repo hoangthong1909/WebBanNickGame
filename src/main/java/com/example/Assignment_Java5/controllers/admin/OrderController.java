@@ -1,11 +1,9 @@
 package com.example.Assignment_Java5.controllers.admin;
 
-import com.example.Assignment_Java5.entitys.Card;
+import com.example.Assignment_Java5.entitys.*;
 import com.example.Assignment_Java5.entitys.CardEnum.CardType;
-import com.example.Assignment_Java5.entitys.Items;
-import com.example.Assignment_Java5.entitys.Order;
-import com.example.Assignment_Java5.entitys.User;
 import com.example.Assignment_Java5.service.ICardService;
+import com.example.Assignment_Java5.service.IItemsService;
 import com.example.Assignment_Java5.service.IOrderService;
 import com.example.Assignment_Java5.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,24 +38,27 @@ public class OrderController {
     private IUserService userDao;
 
     @Autowired
+    private IItemsService itemsDao;
+
+    @Autowired
     HttpServletRequest request;
 
     @Autowired
     HttpSession session;
 
-    @GetMapping("/index")
-    public String index(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
+    @GetMapping("/items")
+    public String getOrderItems(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
-        model.addAttribute("list", orderDao.findPageAll(pageable));
-        request.setAttribute("view","/views/admin/order.jsp");
+        model.addAttribute("list", orderDao.findAllOrderItems(pageable));
+        request.setAttribute("view","/views/admin/orderitems.jsp");
         return "admin/admin";
     }
 
-    @GetMapping("/showdetail")
+    @GetMapping("/showdetailItems")
     public String showDetail(Model model,@RequestParam(name = "id") Integer id) {
         Order order = orderDao.findById(id);
         model.addAttribute("orderDetail", order.getOrderdetails());
-        request.setAttribute("view","/views/admin/orderdetail.jsp");
+        request.setAttribute("view","/views/admin/orderdetailitems.jsp");
         return "admin/admin";
     }
 
@@ -72,7 +73,53 @@ public class OrderController {
             e.printStackTrace();
             session.setAttribute("error", "Xóa Thất Bại");
         }
-        return "redirect:/admin/order/index";
+        return "redirect:/admin/order/items";
+    }
+    @PostMapping("/confirm")
+    public String confirm(@RequestParam(name = "id") Integer id) {
+        try {
+            Order order = orderDao.findById(id);
+            order.setStatus(1);
+            this.orderDao.update(order);
+            session.setAttribute("message", "Xác nhận Thành Công");
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.setAttribute("error", "Xác nhận Thất Bại");
+        }
+        return "redirect:/admin/order/items";
+    }
+    @PostMapping("/cancel")
+    public String cancel(@RequestParam(name = "id") Integer id) {
+        try {
+            List<Items> itemsList = itemsDao.getAll();
+            Order order = orderDao.findById(id);
+            order.setStatus(2);
+            this.orderDao.update(order);
+            User user =userDao.findById(order.getUserDatHang().getId());
+            user.setSurplus(user.getSurplus().add(order.getTotal()));
+            this.userDao.update(user);
+            for (OrderDetail item : order.getOrderdetails()){
+            for (Items i : itemsList) {
+                if (item.getItems().getId() == i.getId()) {
+                    i.setQuantity(i.getQuantity() + item.getQuantity());
+                    this.itemsDao.update(i);
+                }
+            }
+            }
+            session.setAttribute("message", "Hủy Thành Công");
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.setAttribute("error", "Hủy Thất Bại");
+        }
+        return "redirect:/admin/order/items";
+    }
+
+    @GetMapping("/nick")
+    public String getOrderNick(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
+        Pageable pageable = PageRequest.of(page.orElse(0), 5);
+        model.addAttribute("list", orderDao.findAllOrderNick(pageable));
+        request.setAttribute("view","/views/admin/ordernick.jsp");
+        return "admin/admin";
     }
 
 }

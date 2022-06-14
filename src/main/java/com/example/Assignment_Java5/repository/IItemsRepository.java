@@ -19,4 +19,5 @@ public interface IItemsRepository extends JpaRepository<Items, Integer> {
 
     @Query("select obj from Items obj where obj.categoryItem.id = ?1")
     Page<Items> findAllByCategoryItem(Integer id,Pageable pageable);
+
 }

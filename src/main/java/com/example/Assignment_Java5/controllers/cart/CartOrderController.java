@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
@@ -41,7 +42,7 @@ public class CartOrderController {
     private IOrderDetailsService orderDetailsDao;
 
     @GetMapping("addtoorder")
-    public String addOrder() {
+    public String addOrder(@RequestParam(name = "idGame") String idGame,@RequestParam(name = "location") String location) {
         Order orderSession = (Order) session.getAttribute("order");
         if (orderSession != null) {
             User user = (User) session.getAttribute("user");
@@ -49,19 +50,12 @@ public class CartOrderController {
                 List<OrderDetail> listOrder = orderSession.getOrderdetails();
                 List<Items> itemsList = itemsDao.getAll();
                 order.setUserDatHang(user);
+                order.setIdGame(idGame);
+                order.setLocation(location);
                 order.setOrderdetails(listOrder);
                 order.setDatecreate(new Date());
-                order.setStatus(1);
-                BigDecimal total = BigDecimal.valueOf(0);
-                for (Items i: itemsList) {
-                    for (OrderDetail item : listOrder) {
-                        if (i.getId()==item.getItems().getId()){
-                            item.setItems(i);
-                            BigDecimal q = BigDecimal.valueOf(item.getQuantity());
-                            total = total.add(i.getPrice(),MathContext.DECIMAL32).multiply(q);
-                        }
-                    }
-                }
+                order.setStatus(0);
+                BigDecimal total= (BigDecimal) session.getAttribute("total");
                 order.setTotal(total);
                 if (total.compareTo(user.getSurplus()) > 0) {
                     session.setAttribute("error", "Tài Khoản của bạn không đủ tiền , vui lòng nạp thêm tiền");
@@ -81,16 +75,17 @@ public class CartOrderController {
                                 if (item.getItems().getId() == i.getId()) {
                                     i.setQuantity(i.getQuantity() - item.getQuantity());
                                     this.itemsDao.update(i);
+                                    System.out.println(i.getQuantity());
                                 }
                             }
-                            user.setSurplus(user.getSurplus().subtract(total,MathContext.DECIMAL32));
-                            this.userDao.update(user);
                         }
+                            user.setSurplus(user.getSurplus().subtract(order.getTotal(), MathContext.DECIMAL32));
+                            this.userDao.update(user);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     session.removeAttribute("order");
-                    return "redirect:/home/index";
+                    return "redirect:/home/history/buyitems";
                 }
             } else {
                 return "redirect:/login";

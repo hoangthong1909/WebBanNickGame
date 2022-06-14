@@ -63,4 +63,24 @@ public class OrderService implements IOrderService {
     public Order findById(Integer id) {
         return repository.findById(id).get();
     }
+
+    @Override
+    public Page<Order> findAllOrderNickByUser(Integer id, Pageable pageable) {
+        return repository.findAllOrderNickByUser(id,pageable);
+    }
+
+    @Override
+    public Page<Order> findAllOrderItemsByUser(Integer id, Pageable pageable) {
+        return repository.findAllOrderItemsByUser(id,pageable);
+    }
+
+    @Override
+    public Page<Order> findAllOrderItems(Pageable pageable) {
+        return repository.findAllOrderItems(pageable);
+    }
+
+    @Override
+    public Page<Order> findAllOrderNick(Pageable pageable) {
+        return repository.findAllOrderNick(pageable);
+    }
 }

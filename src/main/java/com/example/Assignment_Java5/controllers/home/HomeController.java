@@ -1,9 +1,8 @@
 package com.example.Assignment_Java5.controllers.home;
 
-import com.example.Assignment_Java5.service.ICategoryService;
-import com.example.Assignment_Java5.service.IItemsService;
-import com.example.Assignment_Java5.service.INickGameService;
-import com.example.Assignment_Java5.service.IServerService;
+import com.example.Assignment_Java5.entitys.NickGame;
+import com.example.Assignment_Java5.entitys.User;
+import com.example.Assignment_Java5.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +29,9 @@ public class HomeController {
     @Autowired
     private INickGameService nickGameDao;
 
+    @Autowired
+    private IUserService userDao;
+
 
     @Autowired
     private ICategoryService categoryDao;
@@ -43,7 +45,17 @@ public class HomeController {
     @GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("listCate", categoryDao.getAll());
+        User user= (User) session.getAttribute("user");
         request.setAttribute("view", "/views/home/home.jsp");
+        if (user!=null){
+        for (User user1: userDao.getAll()) {
+        if (user.getId()==user1.getId()){
+            session.setAttribute("user",user1);
+        }
+        }
+        }else {
+            return "home/layout";
+        }
         return "home/layout";
     }
 
@@ -79,7 +91,6 @@ public class HomeController {
     @GetMapping("/showNick/NickDetail")
     public String detailNick(Model model, @RequestParam(name = "id") Integer id) {
         model.addAttribute("detailNick",nickGameDao.findById(id));
-        request.setAttribute("active",1);
         request.setAttribute("view", "/views/home/detailnick.jsp");
         return "home/layout";
     }

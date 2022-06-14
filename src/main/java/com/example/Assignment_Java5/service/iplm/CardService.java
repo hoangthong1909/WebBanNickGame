@@ -61,4 +61,9 @@ public class CardService implements ICardService {
     public Card findById(Integer id) {
         return repository.findById(id).get();
     }
+
+    @Override
+    public Page<Card> findAllByUser(Integer id, Pageable pageable) {
+        return repository.findAllByUser(id,pageable);
+    }
 }

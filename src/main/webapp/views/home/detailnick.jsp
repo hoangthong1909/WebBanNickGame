@@ -33,7 +33,9 @@
                         <div class="form-group row">
                             <div class="col-xs-7 ar">
                                 <c:if test="${detailNick.status==2}">
-                                    <h2 >Đã bán</h2>
+                                    <h2 style="font-family:Roboto; font-size:20px;">
+                                        <span style="color:#e7505a;">Đã Bán</span>
+                                    </h2>
                                 </c:if>
                                 <c:if test="${detailNick.status==1}">
                                     <c:if test="${ !empty sessionScope.user}">
@@ -174,7 +176,7 @@
                 <a href="/home/card" class="btn btn-info mini">NẠP THẺ CÀO</a>
             </c:if>
                 <c:if test="${ sessionScope.user.surplus>detailNick.price}">
-                    <a href="/home/card" class="btn btn-success mini">THANH TOÁN</a>
+                    <a href="/home/addNickToOrder?id=${detailNick.id}" class="btn btn-success mini">THANH TOÁN</a>
 
                 </c:if>
             <button type="button" class="btn btn-warning mini" data-dismiss="modal">Đóng</button>

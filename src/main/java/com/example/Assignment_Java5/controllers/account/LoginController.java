@@ -23,12 +23,12 @@ public class LoginController {
     private IUserService userDao;
 
     @GetMapping("/login")
-    public String loginUI(){
+    public String loginUI() {
         return "account/login";
     }
 
     @PostMapping("/loginAccount")
-    public String login( @RequestParam(name = "email",required = false) String email , @RequestParam(name = "password",required = false) String password) {
+    public String login(@RequestParam(name = "email", required = false) String email, @RequestParam(name = "password", required = false) String password) {
         User user = this.userDao.findByEmail(email);
         if (user == null) {
             session.setAttribute("error", "Tên Đăng Nhập Không Tồn Tại");
@@ -41,8 +41,15 @@ public class LoginController {
                     session.setAttribute("user", user);
                     return "redirect:/admin/user/index";
                 } else {
+                    Object ruri = session.getAttribute("secureUri");
+                    if (ruri != null) {
+                        session.setAttribute("user", user);
+                        session.removeAttribute("secureUri");
+                        return "redirect:" +ruri;
+                    }else {
                     session.setAttribute("user", user);
                     return "redirect:/home/index";
+                    }
                 }
             } else {
                 // Đăng nhập thất bại

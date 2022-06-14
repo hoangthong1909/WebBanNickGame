@@ -53,7 +53,7 @@
                 <td><fmt:formatNumber value="${card.parValue.price}" pattern="#,###"/>VND</td>
                 <td>${card.seri}</td>
                 <td>${card.code}</td>
-                <td><fmt:formatDate value="${card.time}" pattern="dd/MM/yyyy"/></td>
+                <td><fmt:formatDate value="${card.time}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                 <td> <c:choose>
                     <c:when test="${card.status ==0}">
                         <button data-toggle="modal" data-target="#aa${card.id}" class="btn btn-success">Confirm</button>

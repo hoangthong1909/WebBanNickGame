@@ -18,7 +18,7 @@
             <ul class="c-menu c-arrow-dot c-square c-theme">
                 <li><a href="/home/info">Thông tin tài khoản</a></li>
                 <li><a href="/home/card">Nạp tiền thẻ cào</a></li>
-                <li><a href="/home/history">Lịch sử giao dịch</a></li>
+                <li><a href="/home/history/transaction">Lịch sử giao dịch</a></li>
             </ul>
         </div>
     </div>
@@ -29,8 +29,8 @@
         </div>
         <div class="c-content-ver-nav m-b-20">
             <ul class="c-menu c-arrow-dot c-square c-theme">
-                <li><a href="home/historynick">Tài khoản đã mua</a></li>
-                <li><a href="home/historyitems">Vật Phẩm Đã Mua</a></li>
+                <li><a href="/home/history/buynick">Tài khoản đã mua</a></li>
+                <li><a href="/home/history/buyitems">Vật Phẩm Đã Mua</a></li>
                 <li><a href="#">Dịch vụ đã thuê</a></li>
             </ul>
         </div>

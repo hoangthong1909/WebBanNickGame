@@ -115,9 +115,14 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="/admin/order/index">
+            <a class="nav-link" href="/admin/order/items">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Order</span></a>
+                <span>Order Items</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/order/nick">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Order Nick</span></a>
         </li>
 
         <!-- Divider -->
