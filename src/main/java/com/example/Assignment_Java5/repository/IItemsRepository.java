@@ -1,5 +1,6 @@
 package com.example.Assignment_Java5.repository;
 
+import com.example.Assignment_Java5.entitys.Card;
 import com.example.Assignment_Java5.entitys.Category;
 import com.example.Assignment_Java5.entitys.Items;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,9 @@ public interface IItemsRepository extends JpaRepository<Items, Integer> {
 //    @Query("Select obj from Items obj where obj.status = 2")
 //    List<Items> findByItemsSell();
 
-    @Query("select obj from Items obj where obj.categoryItem.id = ?1")
+    @Query("select obj from Items obj where obj.categoryItem.id = ?1 and obj.status>0")
     Page<Items> findAllByCategoryItem(Integer id,Pageable pageable);
 
+    @Query("select obj from Items obj where obj.status > 0")
+    Page<Items> findPageAll( Pageable pageable);
 }

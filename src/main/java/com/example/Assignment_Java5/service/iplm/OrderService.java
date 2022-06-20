@@ -26,7 +26,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public Page<Order> findPageAll(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllPage(pageable);
     }
 
     @Override

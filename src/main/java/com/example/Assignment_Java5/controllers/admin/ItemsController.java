@@ -12,12 +12,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -55,7 +57,15 @@ public class ItemsController {
 
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("items") Items items,@RequestParam("attach") MultipartFile attach) {
+    public String add(@Valid @ModelAttribute("items") Items items, BindingResult result, @RequestParam("attach") MultipartFile attach,Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
+        if (result.hasErrors()){
+            Pageable pageable = PageRequest.of(page.orElse(0), 5);
+            model.addAttribute("list", itemsDao.findPageAll(pageable));
+            model.addAttribute("listServer",serverDao.getAll());
+            model.addAttribute("listCate",categoryDao.findCateItems());
+            request.setAttribute("view","/views/admin/items.jsp");
+            return "admin/admin";
+        }
         try {
             items.setDateCreate(new Date());
             items.setStatus(1);
@@ -117,9 +127,10 @@ public class ItemsController {
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("items") Items items, @RequestParam(name = "id") Integer id) {
+    public String delete( @RequestParam(name = "id") Integer id) {
         try {
-            this.itemsDao.delete(id);
+            Items items1=itemsDao.findById(id);
+            items1.setStatus(0);
             session.setAttribute("message", "Xoa Thành Công");
         } catch (Exception e) {
             e.printStackTrace();

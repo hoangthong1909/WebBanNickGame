@@ -24,7 +24,11 @@
     <link href="/frontend/assets/frontend/theme/assets/demos/default/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="/frontend/assets/frontend/theme/assets/demos/default/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/frontend/assets/frontend/plugins/dataTables/jquery.dataTables.min.css">
-
+    <style>
+        .disabled-link {
+            pointer-events: none;
+        }
+    </style>
     <link href="/frontend/css/main.css" rel="stylesheet" />
     <link href="/frontend/assets/frontend/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">

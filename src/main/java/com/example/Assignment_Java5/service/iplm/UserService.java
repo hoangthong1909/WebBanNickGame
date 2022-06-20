@@ -24,7 +24,7 @@ public class UserService implements IUserService {
 
     @Override
     public Page<User> findPageAll(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findPageAll(pageable);
     }
 
     @Override

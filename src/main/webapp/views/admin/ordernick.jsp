@@ -59,7 +59,7 @@
             <td><fmt:formatDate value="${order.datecreate}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
             <td><fmt:formatNumber value="${order.total}" pattern="#,###"/>VND</td>
             <td style="text-align: center"> <c:choose>
-            <c:when test="${order.status ==1}"><span style="color: #0c4128">Thành công</span></c:when>
+            <c:when test="${order.status ==2}"><span style="color: #0c4128">Thành công</span></c:when>
             <c:otherwise>-</c:otherwise>
         </c:choose></td>
             <td>
@@ -105,24 +105,12 @@
     </div>
     <nav aria-label="Page navigation example" class="d-flex justify-content-end col-6">
         <ul class="pagination">
-            <c:if test="${list.number-1>0}">
-                <c:set var="number" scope="session" value="?page=${list.number -1}"></c:set>
-            </c:if>
-            <c:if test="${list.number-1<1}">
-                <c:set var="number" scope="session" value=""></c:set>
-            </c:if>
-            <c:if test="${list.number+1>list.totalPages}">
-                <c:set var="numberup" scope="session" value="?page=${list.totalPages}"></c:set>
-            </c:if>
-            <c:if test="${list.number+1<list.totalPages}">
-                <c:set var="numberup" scope="session" value="?page=${list.number+1}"></c:set>
-            </c:if>
-            <li class="page-item"><a class="page-link" href="/admin/order/nick${number} ">Previous</a></li>
+            <li ${list.number ==0 ? "hidden": ""} class="page-item"><a class="page-link" href="/admin/order/nick?page=${list.number-1} ">Previous</a></li>
             <c:forEach var="i" begin="0" end="${ list.totalPages - 1 }">
                 <li class="page-item"><a class="page-link" href="/admin/order/nick?page=${ i }">${ i + 1 }</a></li>
                 </li>
             </c:forEach>
-            <li class="page-item"><a class="page-link" href="/admin/order/nick${numberup}">Next</a></li>
+            <li ${list.number ==list.totalPages-1 ? "hidden": ""} class="page-item"><a class="page-link" href="/admin/order/nick?page=${list.number+1}">Next</a></li>
         </ul>
     </nav>
 </div>

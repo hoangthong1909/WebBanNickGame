@@ -43,6 +43,7 @@ public class CategoryController {
     }
 
 
+
     @PostMapping("/add")
     public String add(@ModelAttribute("category") Category category,@RequestParam("attach") MultipartFile attach) {
         try {
@@ -100,9 +101,11 @@ public class CategoryController {
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("category") Category category, @RequestParam(name = "id") Integer id) {
+    public String delete( @RequestParam(name = "id") Integer id) {
         try {
-            this.categoryDao.delete(id);
+            Category category=categoryDao.findById(id);
+            category.setStatus(0);
+            this.categoryDao.update(category);
             session.setAttribute("message", "Xóa Thành Công");
         } catch (Exception e) {
             e.printStackTrace();

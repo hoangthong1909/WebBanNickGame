@@ -4,6 +4,9 @@ import com.example.Assignment_Java5.entitys.NickEnum.NickPlanet;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -25,12 +28,16 @@ public class NickGame {
     @Column(name = "planet")
     private NickPlanet planet;
 
+    @NotBlank(message = "UserName cannot be blank")
     @Column(name = "user", length = 50)
     private String user;
 
+    @NotBlank(message = "Password cannot be blank")
     @Column(name = "password", length = 50)
     private String password;
 
+    @NotNull(message = "Price cannot be null")
+    @Min(10000)
     @Column(name = "price", precision = 10)
     private BigDecimal price;
 

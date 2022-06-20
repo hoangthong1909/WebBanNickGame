@@ -24,7 +24,7 @@ public class CardService implements ICardService {
 
     @Override
     public Page<Card> findPageAll(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findPageAll(pageable);
     }
 
     @Override

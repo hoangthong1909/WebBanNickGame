@@ -60,7 +60,7 @@ public class NickOrderController {
             order.setTotal(nickGame.getPrice());
             order.setLocation("no-data");
             order.setIdGame("no-data");
-            order.setStatus(1);
+            order.setStatus(2);
             order.setOrderdetails(list);
             try {
                 this.orderDao.insert(order);

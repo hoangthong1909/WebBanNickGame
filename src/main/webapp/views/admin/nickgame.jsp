@@ -28,17 +28,21 @@
             <div class="form-group mt-4 col-6">
                 <form:label path="">UserName</form:label>
                 <form:input  path="user" class="form-control" value="${pro.user}"/>
+                <form:errors path="user" class="text-danger"/>
             </div>
             <c:if test="${pro.id==null}">
                 <div class="form-group mt-4 col-6">
                     <form:label path="password">Password</form:label>
                     <form:input type="password" name="password" path="password" class="form-control"
                                 value="${pro.password}"/>
+                    <form:errors path="password" class="text-danger"/>
                 </div>
             </c:if>
             <div class="form-group mt-4 col-6">
                 <form:label path="price">Price</form:label>
                 <form:input name="price" path="price" class="form-control" value="${pro.price}"/>
+                <form:errors path="price" class="text-danger"/>
+
             </div>
             <div class="form-group mt-4 col-6">
                 <label class="form-label fw-bold">Planet</label>
@@ -137,7 +141,7 @@
                         <a href="/admin/nickgame/edit?id=${product.id}" class="btn btn-primary">Cập Nhật</a>
                     </td>
                     <td>
-                        <a data-bs-toggle="modal" data-bs-target="#b${product.id}" class="btn btn-danger">Xóa</a>
+                        <a data-toggle="modal" data-target="#b${product.id}" class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -156,24 +160,12 @@
         </div>
         <nav aria-label="Page navigation example" class="d-flex justify-content-end col-6">
             <ul class="pagination">
-                <c:if test="${list.number-1>0}">
-                    <c:set var="number" scope="session" value="?page=${list.number -1}"></c:set>
-                </c:if>
-                <c:if test="${list.number-1<1}">
-                    <c:set var="number" scope="session" value=""></c:set>
-                </c:if>
-                <c:if test="${list.number+1>list.totalPages}">
-                    <c:set var="numberup" scope="session" value="?page=${list.totalPages}"></c:set>
-                </c:if>
-                <c:if test="${list.number+1<list.totalPages}">
-                    <c:set var="numberup" scope="session" value="?page=${list.number+1}"></c:set>
-                </c:if>
-                <li class="page-item"><a class="page-link" href="/admin/nickgame/index${number} ">Previous</a></li>
+                <li ${list.number ==0 ? "hidden": ""} class="page-item"><a class="page-link" href="/admin/nickgame/index?page=${list.number-1} ">Previous</a></li>
                 <c:forEach var="i" begin="0" end="${ list.totalPages - 1 }">
                     <li class="page-item"><a class="page-link" href="/admin/nickgame/index?page=${ i }">${ i + 1 }</a></li>
                     </li>
                 </c:forEach>
-                <li class="page-item"><a class="page-link" href="/admin/nickgame/index${numberup}">Next</a></li>
+                <li ${list.number ==list.totalPages-1 ? "hidden": ""} class="page-item"><a class="page-link" href="/admin/nickgame/index?page=${list.number+1}">Next</a></li>
             </ul>
         </nav>
     </div>
@@ -183,7 +175,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Xác nhận</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    <button type="button" class="btn-close" data-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -194,7 +186,7 @@
                         <input type="hidden" value="${product.id}" name="id">
                         <button class="btn btn-danger">Xóa</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
                             aria-label="Close">Hủy
                     </button>
                 </div>

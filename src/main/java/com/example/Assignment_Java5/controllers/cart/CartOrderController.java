@@ -54,7 +54,7 @@ public class CartOrderController {
                 order.setLocation(location);
                 order.setOrderdetails(listOrder);
                 order.setDatecreate(new Date());
-                order.setStatus(0);
+                order.setStatus(1);
                 BigDecimal total= (BigDecimal) session.getAttribute("total");
                 order.setTotal(total);
                 if (total.compareTo(user.getSurplus()) > 0) {

@@ -79,7 +79,7 @@ public class OrderController {
     public String confirm(@RequestParam(name = "id") Integer id) {
         try {
             Order order = orderDao.findById(id);
-            order.setStatus(1);
+            order.setStatus(2);
             this.orderDao.update(order);
             session.setAttribute("message", "Xác nhận Thành Công");
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class OrderController {
         try {
             List<Items> itemsList = itemsDao.getAll();
             Order order = orderDao.findById(id);
-            order.setStatus(2);
+            order.setStatus(3);
             this.orderDao.update(order);
             User user =userDao.findById(order.getUserDatHang().getId());
             user.setSurplus(user.getSurplus().add(order.getTotal()));

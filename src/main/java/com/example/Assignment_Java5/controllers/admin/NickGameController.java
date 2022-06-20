@@ -11,12 +11,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -54,7 +56,15 @@ public class NickGameController {
 
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("nickgame") NickGame nickgame,@RequestParam("attach") MultipartFile attach) {
+    public String add(@Valid  @ModelAttribute("nickgame") NickGame nickgame,BindingResult result,Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page, @RequestParam("attach") MultipartFile attach) {
+        if (result.hasErrors()){
+            Pageable pageable = PageRequest.of(page.orElse(0), 5);
+            model.addAttribute("list", dao.findPageAll(pageable));
+            model.addAttribute("listCate",categoryDao.findCateProduct());
+            model.addAttribute("listServer",serverDao.getAll());
+            request.setAttribute("view","/views/admin/nickgame.jsp");
+            return "admin/admin";
+        }
         try {
             nickgame.setCreateDate(new Date());
             if (!attach.isEmpty()) {
@@ -119,7 +129,9 @@ public class NickGameController {
     @PostMapping("/delete")
     public String delete( @RequestParam(name = "id") Integer id) {
         try {
-            this.dao.delete(id);
+            NickGame nickGame =dao.findById(id);
+            nickGame.setStatus(0);
+            this.dao.update(nickGame);
             session.setAttribute("message", "Xoa Thành Công");
         } catch (Exception e) {
             e.printStackTrace();

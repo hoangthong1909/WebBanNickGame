@@ -3,7 +3,6 @@ package com.example.Assignment_Java5.entitys;
 import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsPlanet;
 import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsType;
 import com.example.Assignment_Java5.entitys.ItemsEnum.ItemsVP;
-import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,8 @@ public class Items {
     @Column(name = "type")
     private ItemsType type;
 
+    @NotNull(message = "Price cannot be null")
+    @Min(10000)
     @Column(name = "price")
     private BigDecimal price;
 
@@ -38,6 +42,8 @@ public class Items {
     @Column(name = "status")
     private Integer status;
 
+    @NotNull(message = "Quantity cannot be null")
+    @Min(0)
     @Column(name = "quantity")
     private Integer quantity;
 

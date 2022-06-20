@@ -209,38 +209,17 @@
             </div>
           </div>
         </div>
-</c:forEach>
+    </c:forEach>
       </div>
       <div class="dataTables_wrapper no-footer">
-        <div class="dataTables_paginate paging_simple_numbers" id="tb_hisser_paginate">
+        <div class="dataTables_paginate" >
+<%--          <a href="/home/showVP?id=${idcatevp}&&?page=${listItems.number-1}" class="paginate_button previous prev">&lt;</a>--%>
+          <c:forEach var="i" begin="0" end="${ listItems.totalPages - 1 }">
           <span>
-           <a href="#" class="paginate_button current" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">1</a>
+           <a href="/home/showVP?id=${idcatevp}&&?page=${i}" class="paginate_button ${i+1==listItems.number ? 'current' : ''}" >${i+1}</a>
            </span>
-          <span>
-           <a href="../BuyNickefcb.html?&amp;id=99271dd9-ec5a-48d3-9c11-1b4bde90f537&amp;p=2" class="paginate_button" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">2</a>
-           </span>
-          <span>
-           <a href="../BuyNick956c.html?&amp;id=99271dd9-ec5a-48d3-9c11-1b4bde90f537&amp;p=3" class="paginate_button" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">3</a>
-            </span>
-          <span>
-            <a href="../BuyNickb441.html?&amp;id=99271dd9-ec5a-48d3-9c11-1b4bde90f537&amp;p=4" class="paginate_button" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">4</a>
-            </span>
-          <span>
-            <a href="../BuyNick826e.html?&amp;id=99271dd9-ec5a-48d3-9c11-1b4bde90f537&amp;p=5" class="paginate_button" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">5</a>
-          </span>
-          <span>
-          <a href="../BuyNick1409.html?&amp;id=99271dd9-ec5a-48d3-9c11-1b4bde90f537&amp;p=6" class="paginate_button" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">6</a>
-           </span>
-          <span>
-          <a href="../BuyNick2d95.html?&amp;id=99271dd9-ec5a-48d3-9c11-1b4bde90f537&amp;p=7" class="paginate_button" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">7</a>
-           </span>
-          <span>
-           <a href="../BuyNickd2ab.html?&amp;id=99271dd9-ec5a-48d3-9c11-1b4bde90f537&amp;p=8" class="paginate_button" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">8</a>
-           </span>
-          <span>
-           <a href="../BuyNick3628.html?&amp;id=99271dd9-ec5a-48d3-9c11-1b4bde90f537&amp;p=9" class="paginate_button" aria-controls="tb_hisser" data-dt-idx="1" tabindex="0">9</a>
-           </span>
-          <a title="Trang cuối" href="../BuyNick3ad0.html?id=99271dd9-ec5a-48d3-9c11-1b4bde90f537" class="paginate_button next c-last" aria-controls="tb_hisser" data-dt-idx="2" tabindex="0" id="tb_hisser_next">&gt;</a>
+          </c:forEach>
+<%--          <a href="/home/showVP?id=${idcatevp}&&?page=${listItems.number+1}" class="paginate_button next ${listItems.number ==listItems.totalPages-1 ? "disabled-link": ""}">&gt;</a>--%>
         </div>
       </div>
     </div>

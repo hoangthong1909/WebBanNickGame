@@ -11,4 +11,7 @@ import java.util.List;
 public interface ICardRepository extends JpaRepository<Card, Integer> {
     @Query("select obj from Card obj where obj.userId.id = ?1")
     Page<Card> findAllByUser(Integer id, Pageable pageable);
+
+    @Query("select obj from Card obj where obj.status > 0")
+    Page<Card> findPageAll(Pageable pageable);
 }

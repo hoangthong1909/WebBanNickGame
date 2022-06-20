@@ -48,7 +48,7 @@ public class TopUpCardController {
             try {
                 card.setTime(new Date());
                 card.setUserId(user);
-                card.setStatus(0);
+                card.setStatus(1);
                 this.cardDao.insert(card);
                 session.setAttribute("message", " Thẻ đang chờ xử lí");
             } catch (Exception e) {

@@ -54,7 +54,7 @@ public class CardController {
     public String confirm(@RequestParam(name = "id") Integer id) {
         try {
             Card card = cardDao.findById(id);
-            card.setStatus(1);
+            card.setStatus(2);
             this.cardDao.update(card);
             User user =userDao.findById(card.getUserId().getId());
             user.setSurplus(user.getSurplus().add(card.getParValue().getPrice()));
@@ -70,7 +70,7 @@ public class CardController {
     public String cancel(@RequestParam(name = "id") Integer id) {
         try {
             Card card = cardDao.findById(id);
-            card.setStatus(2);
+            card.setStatus(3);
             this.cardDao.update(card);
             session.setAttribute("message", "Hủy Thành Công");
         } catch (Exception e) {
@@ -84,7 +84,9 @@ public class CardController {
     @PostMapping("/delete")
     public String delete(@RequestParam(name = "id") Integer id) {
         try {
-            this.cardDao.delete(id);
+            Card card = cardDao.findById(id);
+            card.setStatus(0);
+            this.cardDao.update(card);
             session.setAttribute("message", "Xoá Thành Công");
         } catch (Exception e) {
             e.printStackTrace();

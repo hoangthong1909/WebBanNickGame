@@ -26,7 +26,7 @@ public class NickGameService implements INickGameService {
 
     @Override
     public Page<NickGame> findPageAll(Pageable pageable) {
-        return repository.findAllProduct(pageable);
+        return repository.findPageAll(pageable);
     }
 
     @Override

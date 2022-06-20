@@ -23,7 +23,7 @@ public class ItemsService implements IItemsService {
 
     @Override
     public Page<Items> findPageAll(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findPageAll(pageable);
     }
 
     @Override

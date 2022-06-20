@@ -114,11 +114,25 @@
                     <c:forEach items="${listCate}" var="cate">
                         <div class="col-sm-3 col-xs-6 p-5">
                             <div class="classWithPad">
-                                <a href="#" title="">
-                                    <div class="news_image">
-                                        <img src="${cate.image}">
-                                    </div>
-                                </a>
+                                <c:if test="${cate.status==1}">
+                                    <a href="/home/showNick?id=${cate.id}" title="">
+                                        <div class="news_image">
+                                            <img src="${cate.image}">
+                                        </div>
+                                    </a>
+                                </c:if>
+                                <c:if test="${cate.status==2}">
+                                    <a href="/home/showVP?id=${cate.id}" title="">
+                                        <div class="news_image">
+                                            <img src="${cate.image}">
+                                        </div>
+                                    </a>
+                                </c:if>
+<%--                                <a href="#" title="">--%>
+<%--                                    <div class="news_image">--%>
+<%--                                        <img src="${cate.image}">--%>
+<%--                                    </div>--%>
+<%--                                </a>--%>
                                 <div class="news_title">
                                     <c:if test="${cate.status==1}">
                                     <a href="/home/showNick?id=${cate.id}" title=""></a>

@@ -8,10 +8,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.*;
 @Controller
 @RequestMapping("/admin/user")
@@ -35,7 +37,13 @@ public class UserController {
 
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("user") User user,@RequestParam(name = "password") String password) {
+    public String add( Model model,@Valid @ModelAttribute("user") User user,BindingResult result, @RequestParam(name = "password") String password, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
+        if (result.hasErrors()){
+            Pageable pageable = PageRequest.of(page.orElse(0), 5);
+            model.addAttribute("list", userDao.findPageAll(pageable));
+            request.setAttribute("view","/views/admin/user.jsp");
+            return "admin/admin";
+        }else {
         try {
             String encrypted = EncryptUtil.encrypt(password);
             user.setStatus(1);
@@ -47,10 +55,12 @@ public class UserController {
             session.setAttribute("error", "Thêm Mới Thất Bại");
         }
         return "redirect:/admin/user/index";
+        }
     }
 
     @GetMapping("/edit")
     public String edit(@RequestParam(name = "id") Integer id, Model model, @ModelAttribute("user") User user, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page) {
+        Integer idCu=id;
         model.addAttribute("user", userDao.findById(id));
         Pageable pageable = PageRequest.of(page.orElse(0), 5);
         request.setAttribute("list", userDao.findPageAll(pageable));
@@ -59,7 +69,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("user") User user, @RequestParam(name = "id") Integer id) {
+    public String update( @ModelAttribute("user") User user, @RequestParam(name = "id") Integer id) {
         try {
             User u=userDao.findById(id);
             user.setPassword(u.getPassword());
@@ -74,9 +84,11 @@ public class UserController {
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("user") User user, @RequestParam(name = "id") Integer id) {
+    public String delete( @RequestParam(name = "id") Integer id) {
         try {
-            this.userDao.delete(id);
+            User user=userDao.findById(id);
+            user.setStatus(0);
+            this.userDao.update(user);
             session.setAttribute("message", "Xóa Thành Công");
         } catch (Exception e) {
             e.printStackTrace();

@@ -23,7 +23,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Page<Category> findPageAll(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findPageAll(pageable);
     }
 
     @Override

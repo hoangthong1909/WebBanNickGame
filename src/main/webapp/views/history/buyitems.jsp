@@ -51,9 +51,10 @@
                                                     <td style="text-align: center">${h.orderdetails.size()}</td>
                                                     <td style="text-align: center"><span style="color: red"><fmt:formatNumber value="${h.total}" pattern="#,###"/>VND</span></td>
                                                     <td style="text-align: center"> <c:choose>
-                                                        <c:when test="${h.status ==0}"><span style="color: #0a58ca">Chờ giao dịch</span></c:when>
-                                                        <c:when test="${h.status ==1}"><span style="color: #0c4128">Thành công</span></c:when>
-                                                        <c:when test="${h.status ==2}"><span style="color: red">Hủy giao dịch</span></c:when>
+                                                        <c:when test="${h.status ==1}"><span style="color: #0a58ca">Chờ giao dịch</span></c:when>
+                                                        <c:when test="${h.status ==2}"><span style="color: #0c4128">Thành công</span></c:when>
+                                                        <c:when test="${h.status ==3}"><span style="color: red">Hủy giao dịch</span></c:when>
+                                                        <c:when test="${h.status ==0}"><span style="color: red">Hết hạn</span></c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose></td>
                                                     <td style="text-align: center"><a class="btn btn-info" href="/home/history/buyitems/show?id=${h.id}">Chi tiết</a></td>
@@ -61,32 +62,18 @@
                                             </c:forEach>
                                             </tbody>
                                         </table>
-<%--                                        <div class="row">--%>
-<%--                                            <nav aria-label="Page navigation example" class="d-flex justify-content-end col-6">--%>
-<%--                                                <ul class="pagination">--%>
-<%--                                                    <c:if test="${history.number-1>0}">--%>
-<%--                                                        <c:set var="number" scope="session" value="?page=${list.number -1}"></c:set>--%>
-<%--                                                    </c:if>--%>
-<%--                                                    <c:if test="${history.number-1<1}">--%>
-<%--                                                        <c:set var="number" scope="session" value=""></c:set>--%>
-<%--                                                    </c:if>--%>
-<%--                                                    <c:if test="${history.number+1>list.totalPages}">--%>
-<%--                                                        <c:set var="numberup" scope="session" value="?page=${history.totalPages}"></c:set>--%>
-<%--                                                    </c:if>--%>
-<%--                                                    <c:if test="${history.number+1<list.totalPages}">--%>
-<%--                                                        <c:set var="numberup" scope="session" value="?page=${history.number+1}"></c:set>--%>
-<%--                                                    </c:if>--%>
-<%--                                                    <li class="page-item"><a class="page-link" href="/home/history/transaction${number} ">Previous</a></li>--%>
-<%--                                                    <c:forEach var="i" begin="0" end="${ history.totalPages - 1 }">--%>
-<%--                                                        <li class="page-item"><a class="page-link" href="/home/history/transaction?page=${ i }">${ i + 1 }</a></li>--%>
-<%--                                                        </li>--%>
-<%--                                                    </c:forEach>--%>
-<%--                                                    <c:if test="${history.number+1<list.totalPages}">--%>
-<%--                                                        <li class="page-item"><a class="page-link" href="/admin/order/index${numberup}">Next</a></li>--%>
-<%--                                                    </c:if>--%>
-<%--                                                </ul>--%>
-<%--                                            </nav>--%>
-<%--                                        </div>--%>
+                                        <div class="dataTables_wrapper no-footer">
+                                        <div class="dataTables_paginate">
+                                            <%--          <a href="/home/showVP?id=${idcatevp}&&?page=${listItems.number-1}" class="paginate_button previous prev">&lt;</a>--%>
+                                            <c:forEach var="i" begin="0" end="${ history.totalPages - 1 }">
+                                                         <span>
+                                                        <a href="/home/history/buyitems?page=${i}"
+                                                           class="paginate_button current ">${i+1}</a>
+                                                                </span>
+                                            </c:forEach>
+                                            <%--          <a href="/home/showVP?id=${idcatevp}&&?page=${listItems.number+1}" class="paginate_button next ${listItems.number ==listItems.totalPages-1 ? "disabled-link": ""}">&gt;</a>--%>
+                                        </div>
+                                        </div>
                                     </div>
 
                                 </div>

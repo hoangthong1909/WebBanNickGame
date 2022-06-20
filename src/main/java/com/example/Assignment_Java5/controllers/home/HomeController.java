@@ -68,16 +68,18 @@ public class HomeController {
 
     @GetMapping("/showVP")
     public String showVP(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page, @RequestParam(name = "id") Integer id) {
-        Pageable pageable = PageRequest.of(page.orElse(0), 5);
+        Pageable pageable = PageRequest.of(page.orElse(0), 8);
         model.addAttribute("listItems", itemsDao.findItemsByCate(id, pageable));
+        session.setAttribute("idcatevp",id);
         request.setAttribute("view", "/views/home/showitems.jsp");
         return "home/layout";
     }
 
     @GetMapping("/showNick")
     public String showNick(Model model, @RequestParam(name = "page", required = false, defaultValue = "0") Optional<Integer> page, @RequestParam(name = "id") Integer id) {
-        Pageable pageable = PageRequest.of(page.orElse(0), 5);
+        Pageable pageable = PageRequest.of(page.orElse(0), 8);
         model.addAttribute("listNick", nickGameDao.findNickByCate(id, pageable));
+        session.setAttribute("idcatenick",id);
         request.setAttribute("view", "/views/home/shownick.jsp");
         return "home/layout";
     }

@@ -28,7 +28,7 @@
                                     </div>
                                     <!-- End-->
                                     <div class="content_post">
-                                        <table class="table shopping-summery table-striped" >
+                                        <table class="table shopping-summery table-striped">
                                             <thead>
                                             <tr>
                                                 <th scope="col">STT</th>
@@ -48,42 +48,32 @@
                                                     <td><fmt:formatNumber value="${h.parValue.price}" pattern="#,###"/>VND</td>
                                                     <td>${h.seri}</td>
                                                     <td>${h.code}</td>
-                                                    <td><fmt:formatDate value="${h.time}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
-                                                   <td> <c:choose>
-                                                        <c:when test="${h.status ==0}"><span style="color: #0a58ca">Chờ xử lí</span></c:when>
-                                                        <c:when test="${h.status ==1}"><span style="color: #0c4128">Thành công</span></c:when>
-                                                        <c:when test="${h.status ==2}"><span style="color: red">Thẻ sai</span></c:when>
+                                                    <td><fmt:formatDate value="${h.time}"
+                                                                        pattern="dd/MM/yyyy HH:mm:ss"/></td>
+                                                    <td><c:choose>
+                                                        <c:when test="${h.status ==1}"><span style="color: #0a58ca">Chờ xử lí</span></c:when>
+                                                        <c:when test="${h.status ==2}"><span style="color: #0c4128">Thành công</span></c:when>
+                                                        <c:when test="${h.status ==3}"><span
+                                                                style="color: red">Thẻ sai</span></c:when>
+                                                        <c:when test="${h.status ==0}"><span
+                                                                style="color: red">Thẻ Khóa</span></c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose></td>
                                                 </tr>
                                             </c:forEach>
                                             </tbody>
                                         </table>
-                                        <div class="row">
-                                            <nav aria-label="Page navigation example" class="d-flex justify-content-end col-6">
-                                                <ul class="pagination">
-                                                    <c:if test="${history.number-1>0}">
-                                                        <c:set var="number" scope="session" value="?page=${list.number -1}"></c:set>
-                                                    </c:if>
-                                                    <c:if test="${history.number-1<1}">
-                                                        <c:set var="number" scope="session" value=""></c:set>
-                                                    </c:if>
-                                                    <c:if test="${history.number+1>list.totalPages}">
-                                                        <c:set var="numberup" scope="session" value="?page=${history.totalPages}"></c:set>
-                                                    </c:if>
-                                                    <c:if test="${history.number+1<list.totalPages}">
-                                                        <c:set var="numberup" scope="session" value="?page=${history.number+1}"></c:set>
-                                                    </c:if>
-                                                    <li class="page-item"><a class="page-link" href="/home/history/transaction${number} ">Previous</a></li>
-                                                    <c:forEach var="i" begin="0" end="${ history.totalPages - 1 }">
-                                                        <li class="page-item"><a class="page-link" href="/home/history/transaction?page=${ i }">${ i + 1 }</a></li>
-                                                        </li>
-                                                    </c:forEach>
-                                                <c:if test="${history.number+1<list.totalPages}">
-                                                    <li class="page-item"><a class="page-link" href="/admin/order/index${numberup}">Next</a></li>
-                                                     </c:if>
-                                                </ul>
-                                            </nav>
+                                        <div class="dataTables_wrapper no-footer">
+                                            <div class="dataTables_paginate">
+                                                <%--          <a href="/home/showVP?id=${idcatevp}&&?page=${listItems.number-1}" class="paginate_button previous prev">&lt;</a>--%>
+                                                <c:forEach var="i" begin="0" end="${ history.totalPages - 1 }">
+                                                         <span>
+                                                        <a href="/home/history/transaction?page=${i}"
+                                                            class="paginate_button current ">${i+1}</a>
+                                                                </span>
+                                                </c:forEach>
+                                                <%--          <a href="/home/showVP?id=${idcatevp}&&?page=${listItems.number+1}" class="paginate_button next ${listItems.number ==listItems.totalPages-1 ? "disabled-link": ""}">&gt;</a>--%>
+                                            </div>
                                         </div>
                                     </div>
 
